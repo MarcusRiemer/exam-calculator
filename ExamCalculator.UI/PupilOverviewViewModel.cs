@@ -1,5 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using Avalonia.Controls;
 using ExamCalculator.Data;
 using ReactiveUI;
 
@@ -10,9 +12,22 @@ namespace ExamCalculator.UI
         public PupilOverviewViewModel(IScreen screen)
         {
             HostScreen = screen;
-            using var data = new ApplicationDataContext();
-            Pupils = new ObservableCollection<Pupil>(data.Pupils);
+            Pupils = new ObservableCollection<Pupil>(Database.Pupils);
         }
+        
+        public void OnRowEditEnded(object? sender, DataGridRowEditEndedEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var avaloniaInstance = this.Pupils.ElementAt(e.Row.GetIndex());
+                var dbInstance = Database.Entry(avaloniaInstance); 
+                dbInstance.CurrentValues.SetValues(avaloniaInstance);
+                Console.WriteLine($"Avalonia: {avaloniaInstance.FirstName}, DB: {dbInstance.Entity.FirstName}");
+                Database.SaveChanges();
+            }
+        }
+        
+        private ApplicationDataContext Database { get; } = new ();
 
         public ObservableCollection<Pupil> Pupils { get; }
 

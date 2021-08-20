@@ -28,7 +28,7 @@ namespace ExamCalculator.Data
             Console.WriteLine($"Using DB at {db.DbPath}");
             db.Database.EnsureCreated();
             var pendingMigrations = db.Database.GetPendingMigrations();
-            Console.Write($"There are {pendingMigrations.Count()} pending migrations");
+            Console.WriteLine($"There are {pendingMigrations.Count()} pending migrations");
                 
             db.Database.Migrate();
         }

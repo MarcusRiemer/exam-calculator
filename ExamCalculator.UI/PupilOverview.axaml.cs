@@ -1,5 +1,7 @@
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
+using ExamCalculator.Data;
 
 namespace ExamCalculator.UI
 {
@@ -13,6 +15,11 @@ namespace ExamCalculator.UI
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+        }
+        
+        private void OnRowEditEnded(object? sender, DataGridRowEditEndedEventArgs e)
+        {
+            ViewModel.OnRowEditEnded(sender, e);
         }
     }
 }

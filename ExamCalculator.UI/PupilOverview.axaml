@@ -10,7 +10,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Text="Alle Schüler" />
-        <DataGrid Grid.Row="1" Items="{Binding Pupils}" AutoGenerateColumns="True">
+        <DataGrid Grid.Row="1" 
+                  Items="{Binding Pupils}" 
+                  AutoGenerateColumns="True"
+                  RowEditEnded="OnRowEditEnded">
         </DataGrid>
     </Grid>
 </UserControl>

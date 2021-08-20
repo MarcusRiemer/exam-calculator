@@ -10,7 +10,7 @@ namespace ExamCalculator.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid PersonId { get; set; }
         
-        public string FirstName { get; init; }
-        public string LastName { get; init; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }
