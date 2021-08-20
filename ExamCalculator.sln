@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCalculator.UI", "ExamCalculator.UI\ExamCalculator.UI.csproj", "{66AB225D-29EF-456D-A029-A0A9E4866411}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCalculator.Data", "ExamCalculator.Data\ExamCalculator.Data.csproj", "{A3770124-D8AA-4270-BBAF-33551213873D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66AB225D-29EF-456D-A029-A0A9E4866411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66AB225D-29EF-456D-A029-A0A9E4866411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66AB225D-29EF-456D-A029-A0A9E4866411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66AB225D-29EF-456D-A029-A0A9E4866411}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3770124-D8AA-4270-BBAF-33551213873D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3770124-D8AA-4270-BBAF-33551213873D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3770124-D8AA-4270-BBAF-33551213873D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3770124-D8AA-4270-BBAF-33551213873D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

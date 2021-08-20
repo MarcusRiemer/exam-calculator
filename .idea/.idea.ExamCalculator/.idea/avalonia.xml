@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="ExamCalculator.UI/App.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
+        <entry key="ExamCalculator.UI/MainWindow.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
+        <entry key="ExamCalculator.UI/PupilOverview.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
+      </map>
+    </option>
+  </component>
+</project>
