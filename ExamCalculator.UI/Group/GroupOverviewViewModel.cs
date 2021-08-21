@@ -11,7 +11,7 @@ namespace ExamCalculator.UI
 {
     public class GroupOverviewViewModel : ReactiveObject, IRoutableViewModel
     {
-        public GroupOverviewViewModel(IScreen screen)
+        public GroupOverviewViewModel(IScreen screen, RoutingState router)
         {
             HostScreen = screen;
 
@@ -19,9 +19,9 @@ namespace ExamCalculator.UI
             Create = ReactiveCommand.Create(
                 () =>
                 {
-                    var group = Database.Groups.Add(new Group{ GroupId = Guid.NewGuid() });
+                    var group = Database.Groups.Add(new Group {GroupId = Guid.NewGuid()});
                     Database.SaveChanges();
-                    
+
                     Groups.Add(group.Entity);
                     return group;
                 });
@@ -31,18 +31,32 @@ namespace ExamCalculator.UI
                 {
                     Database.Groups.Remove(group);
                     Database.SaveChanges();
-                    
+
                     Groups.Remove(group);
                 }
+            );
+
+            GoDetails = ReactiveCommand.CreateFromObservable(
+                (Guid groupId) => router.Navigate.Execute(new GroupDetailViewModel(screen, groupId))
             );
         }
 
         public ObservableCollection<Group> Groups { get; }
 
         public ReactiveCommand<Unit, EntityEntry<Group>> Create { get; }
-        
+
         public ReactiveCommand<Group, Unit> Delete { get; }
-        
+
+        public ReactiveCommand<Guid, IRoutableViewModel> GoDetails { get; }
+
+        private ApplicationDataContext Database { get; } = new();
+
+        // Reference to IScreen that owns the routable view model.
+        public IScreen HostScreen { get; }
+
+        // Unique identifier for the routable view model.
+        public string UrlPathSegment { get; } = "/group";
+
         public void OnRowEditEnded(DataGridRowEditEndedEventArgs e)
         {
             if (e.EditAction == DataGridEditAction.Commit)
@@ -53,13 +67,5 @@ namespace ExamCalculator.UI
                 Database.SaveChanges();
             }
         }
-
-        private ApplicationDataContext Database { get; } = new();
-
-        // Reference to IScreen that owns the routable view model.
-        public IScreen HostScreen { get; }
-
-        // Unique identifier for the routable view model.
-        public string UrlPathSegment { get; } = "/group";
     }
 }

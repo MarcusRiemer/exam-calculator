@@ -12,13 +12,14 @@ namespace ExamCalculator.UI
             );
 
             GoGroupOverview = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(new GroupOverviewViewModel(this))
+                () => Router.Navigate.Execute(new GroupOverviewViewModel(this, Router))
             );
-
 
             GoExamOverview = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(new ExamOverviewViewModel(this))
             );
+
+            GoGroupOverview.Execute();
         }
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoPupilOverview { get; }

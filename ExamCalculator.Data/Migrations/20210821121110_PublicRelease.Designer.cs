@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExamCalculator.Data.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20210821093154_PublicRelease")]
+    [Migration("20210821121110_PublicRelease")]
     partial class PublicRelease
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

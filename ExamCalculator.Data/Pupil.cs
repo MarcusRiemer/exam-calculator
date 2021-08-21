@@ -14,6 +14,8 @@ namespace ExamCalculator.Data
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public string DisplayName => $"{LastName}, {FirstName}";
+
         public ICollection<Group> Groups { get; set; }
     }
 }
