@@ -1,25 +1,19 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
-using ExamCalculator.Data;
 
 namespace ExamCalculator.UI
 {
-    public class PupilOverview : ReactiveUserControl<PupilOverviewViewModel>
+    public class GroupOverview : ReactiveUserControl<GroupOverviewViewModel>
     {
-        public PupilOverview()
-        {
-            InitializeComponent();
-        }
-
-        private void InitializeComponent()
+        public GroupOverview()
         {
             AvaloniaXamlLoader.Load(this);
         }
-        
+
         private void OnRowEditEnded(object? sender, DataGridRowEditEndedEventArgs e)
         {
-            ViewModel.OnRowEditEnded(sender, e);
+            ViewModel.OnRowEditEnded(e);
         }
     }
 }

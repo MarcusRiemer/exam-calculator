@@ -7,23 +7,28 @@ namespace ExamCalculator.UI
     {
         public MainWindowViewModel()
         {
-            GoNext = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(new FirstViewModel(this))
-            );
-
             GoPupilOverview = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(new PupilOverviewViewModel(this))
             );
-        }
 
-        public ReactiveCommand<Unit, IRoutableViewModel> GoNext { get; }
+            GoGroupOverview = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(new GroupOverviewViewModel(this))
+            );
+
+
+            GoExamOverview = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(new ExamOverviewViewModel(this))
+            );
+        }
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoPupilOverview { get; }
 
+        public ReactiveCommand<Unit, IRoutableViewModel> GoGroupOverview { get; }
+
+        public ReactiveCommand<Unit, IRoutableViewModel> GoExamOverview { get; }
+
         // The command that navigates a user back.
         public ReactiveCommand<Unit, Unit> GoBack => Router.NavigateBack;
-
-        public string BindingProperty { get; } = "Test";
 
         // The Router associated with this Screen.
         // Required by the IScreen interface.

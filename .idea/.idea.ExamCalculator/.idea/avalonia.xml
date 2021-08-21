@@ -4,6 +4,8 @@
     <option name="projectPerEditor">
       <map>
         <entry key="ExamCalculator.UI/App.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
+        <entry key="ExamCalculator.UI/ExamOverview.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
+        <entry key="ExamCalculator.UI/GroupOverview.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
         <entry key="ExamCalculator.UI/MainWindow.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
         <entry key="ExamCalculator.UI/PupilOverview.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
       </map>

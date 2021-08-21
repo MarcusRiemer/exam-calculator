@@ -1,19 +1,21 @@
-using System;
+using ExamCalculator.Data;
 using ReactiveUI;
 
 namespace ExamCalculator.UI
 {
-    public class FirstViewModel : ReactiveObject, IRoutableViewModel
+    public class ExamOverviewViewModel : ReactiveObject, IRoutableViewModel
     {
-        public FirstViewModel(IScreen screen)
+        public ExamOverviewViewModel(IScreen screen)
         {
             HostScreen = screen;
         }
+
+        private ApplicationDataContext Database { get; } = new();
 
         // Reference to IScreen that owns the routable view model.
         public IScreen HostScreen { get; }
 
         // Unique identifier for the routable view model.
-        public string UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
+        public string UrlPathSegment { get; } = "/exam";
     }
 }

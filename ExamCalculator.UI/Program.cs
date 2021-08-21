@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using Avalonia;
+﻿using Avalonia;
+using Avalonia.Logging;
 using Avalonia.ReactiveUI;
-using ExamCalculator.Data;
-using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 using Splat;
 
@@ -22,13 +19,14 @@ namespace ExamCalculator.UI
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp()
         {
-            Locator.CurrentMutable.Register(() => new FirstView(), typeof(IViewFor<FirstViewModel>));
             Locator.CurrentMutable.Register(() => new PupilOverview(), typeof(IViewFor<PupilOverviewViewModel>));
-            
+            Locator.CurrentMutable.Register(() => new ExamOverview(), typeof(IViewFor<ExamOverviewViewModel>));
+            Locator.CurrentMutable.Register(() => new GroupOverview(), typeof(IViewFor<GroupOverviewViewModel>));
+
             return AppBuilder.Configure<App>()
                 .UseReactiveUI()
                 .UsePlatformDetect()
-                .LogToTrace();
+                .LogToTrace(LogEventLevel.Debug);
         }
     }
 }

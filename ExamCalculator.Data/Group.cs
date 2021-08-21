@@ -5,15 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExamCalculator.Data
 {
-    public class Pupil
+    public class Group
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid PupilId { get; set; }
+        public Guid GroupId { get; set; }
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
 
-        public ICollection<Group> Groups { get; set; }
+        public ICollection<Pupil> Pupils { get; set; }
     }
 }

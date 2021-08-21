@@ -6,14 +6,11 @@
              x:Class="ExamCalculator.UI.PupilOverview">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Alle Schüler" />
-        <DataGrid Grid.Row="1" 
-                  Items="{Binding Pupils}" 
+        <DataGrid Grid.Row="0"
+                  Items="{Binding Pupils}"
                   AutoGenerateColumns="True"
-                  RowEditEnded="OnRowEditEnded">
-        </DataGrid>
+                  RowEditEnded="OnRowEditEnded" />
     </Grid>
 </UserControl>

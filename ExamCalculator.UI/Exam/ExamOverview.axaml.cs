@@ -1,14 +1,12 @@
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
-using ReactiveUI;
 
 namespace ExamCalculator.UI
 {
-    public class FirstView : ReactiveUserControl<FirstViewModel>
+    public class ExamOverview : ReactiveUserControl<ExamOverviewViewModel>
     {
-        public FirstView()
+        public ExamOverview()
         {
-            this.WhenActivated(disposables => { });
             AvaloniaXamlLoader.Load(this);
         }
     }

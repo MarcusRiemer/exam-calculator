@@ -14,20 +14,8 @@ namespace ExamCalculator.UI
             HostScreen = screen;
             Pupils = new ObservableCollection<Pupil>(Database.Pupils);
         }
-        
-        public void OnRowEditEnded(object? sender, DataGridRowEditEndedEventArgs e)
-        {
-            if (e.EditAction == DataGridEditAction.Commit)
-            {
-                var avaloniaInstance = this.Pupils.ElementAt(e.Row.GetIndex());
-                var dbInstance = Database.Entry(avaloniaInstance); 
-                dbInstance.CurrentValues.SetValues(avaloniaInstance);
-                Console.WriteLine($"Avalonia: {avaloniaInstance.FirstName}, DB: {dbInstance.Entity.FirstName}");
-                Database.SaveChanges();
-            }
-        }
-        
-        private ApplicationDataContext Database { get; } = new ();
+
+        private ApplicationDataContext Database { get; } = new();
 
         public ObservableCollection<Pupil> Pupils { get; }
 
@@ -36,5 +24,17 @@ namespace ExamCalculator.UI
 
         // Unique identifier for the routable view model.
         public string UrlPathSegment { get; } = "/pupil";
+
+        public void OnRowEditEnded(DataGridRowEditEndedEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var avaloniaInstance = Pupils.ElementAt(e.Row.GetIndex());
+                var dbInstance = Database.Entry(avaloniaInstance);
+                dbInstance.CurrentValues.SetValues(avaloniaInstance);
+                Console.WriteLine($"Avalonia: {avaloniaInstance.FirstName}, DB: {dbInstance.Entity.FirstName}");
+                Database.SaveChanges();
+            }
+        }
     }
 }
