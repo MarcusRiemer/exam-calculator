@@ -3,14 +3,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ExamCalculator.UI.PupilOverview">
+             x:Class="ExamCalculator.UI.PupilOverview"
+             Name="pupilOverview">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0"
+        <Button Content="Schüler:in Neu" Command="{Binding Create}" />
+        <DataGrid Grid.Row="1"
                   Items="{Binding Pupils}"
-                  AutoGenerateColumns="True"
-                  RowEditEnded="OnRowEditEnded" />
+                  RowEditEnded="OnRowEditEnded">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Vorname" Width="*" Binding="{Binding FirstName}" />
+                <DataGridTextColumn Header="Nachame" Width="*" Binding="{Binding LastName}" />
+                <DataGridTemplateColumn Header="Aktionen">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Löschen"
+                                        Command="{Binding #pupilOverview.DataContext.Delete}"
+                                        CommandParameter="{Binding .}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

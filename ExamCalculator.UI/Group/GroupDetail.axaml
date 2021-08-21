@@ -21,7 +21,7 @@
                   AutoGenerateColumns="True" />
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <TextBlock Text="Schüler hinzufügen: " />
+            <TextBlock Text="Schüler:in hinzufügen: " />
             <TextBox TextInput="OnSearchTextChanged" KeyUp="OnSearchKey" />
         </StackPanel>
         <DataGrid Grid.Row="3"

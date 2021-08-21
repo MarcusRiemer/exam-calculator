@@ -16,7 +16,7 @@ namespace ExamCalculator.UI
             );
 
             GoExamOverview = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(new ExamOverviewViewModel(this))
+                () => Router.Navigate.Execute(new ExamOverviewViewModel(this, Router))
             );
 
             GoGroupOverview.Execute();

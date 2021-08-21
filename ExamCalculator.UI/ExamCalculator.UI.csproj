@@ -5,13 +5,13 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.7"/>
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.7"/>
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.7s"/>
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.7"/>
+        <PackageReference Include="Avalonia" Version="0.10.7" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.7" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.7s" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.7" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\ExamCalculator.Data\ExamCalculator.Data.csproj"/>
+        <ProjectReference Include="..\ExamCalculator.Data\ExamCalculator.Data.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Group\GroupOverview.axaml.cs">
@@ -29,6 +29,10 @@
         <Compile Update="Group\GroupDetail.axaml.cs">
             <DependentUpon>GroupDetail.axaml</DependentUpon>
             <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Exam\ExamDetail.axaml.cs">
+          <DependentUpon>GroupDetail.axaml</DependentUpon>
+          <SubType>Code</SubType>
         </Compile>
     </ItemGroup>
 </Project>

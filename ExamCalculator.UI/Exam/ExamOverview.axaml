@@ -3,6 +3,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ExamCalculator.UI.ExamOverview">
-    Klausuren
+             x:Class="ExamCalculator.UI.ExamOverview"
+             Name="examOverview">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Content="Klausur Neu" Command="{Binding Create}" />
+        <DataGrid Grid.Row="1"
+                  Items="{Binding Exams}"
+                  RowEditEnded="OnRowEditEnded">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />
+
+                <DataGridTemplateColumn Header="Aktionen">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Details"
+                                        Command="{Binding #examOverview.DataContext.GoDetails}"
+                                        CommandParameter="{Binding ExamId}" />
+                                <Button Content="Löschen"
+                                        Command="{Binding #examOverview.DataContext.Delete}"
+                                        CommandParameter="{Binding .}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="ID" Binding="{Binding ExamId}" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </UserControl>

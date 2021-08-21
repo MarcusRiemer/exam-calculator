@@ -10,7 +10,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button Content="Neue Klasse" Command="{Binding Create}" />
+        <Button Content="Klasse Neu" Command="{Binding Create}" />
         <DataGrid Grid.Row="1"
                   Items="{Binding Groups}"
                   RowEditEnded="OnRowEditEnded">

@@ -19,11 +19,12 @@ namespace ExamCalculator.UI
             Create = ReactiveCommand.Create(
                 () =>
                 {
-                    var group = Database.Groups.Add(new Group {GroupId = Guid.NewGuid()});
+                    var group = Database.Groups.Add(
+                        new Group {GroupId = Guid.NewGuid()}
+                    );
                     Database.SaveChanges();
 
                     Groups.Add(group.Entity);
-                    return group;
                 });
 
             Delete = ReactiveCommand.Create(
@@ -41,9 +42,10 @@ namespace ExamCalculator.UI
             );
         }
 
+
         public ObservableCollection<Group> Groups { get; }
 
-        public ReactiveCommand<Unit, EntityEntry<Group>> Create { get; }
+        public ReactiveCommand<Unit, Unit> Create { get; }
 
         public ReactiveCommand<Group, Unit> Delete { get; }
 

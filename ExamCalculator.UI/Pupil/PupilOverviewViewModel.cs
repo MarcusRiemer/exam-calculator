@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using Avalonia.Controls;
 using ExamCalculator.Data;
 using ReactiveUI;
@@ -13,7 +14,32 @@ namespace ExamCalculator.UI
         {
             HostScreen = screen;
             Pupils = new ObservableCollection<Pupil>(Database.Pupils);
+
+            Create = ReactiveCommand.Create(
+                () =>
+                {
+                    var pupil = Database.Pupils.Add(
+                        new Pupil {PupilId = Guid.NewGuid()}
+                    );
+                    Database.SaveChanges();
+
+                    Pupils.Add(pupil.Entity);
+                });
+            
+            Delete = ReactiveCommand.Create(
+                (Pupil pupil) =>
+                {
+                    Database.Pupils.Remove(pupil);
+                    Database.SaveChanges();
+
+                    Pupils.Remove(pupil);
+                }
+            );
         }
+
+        public ReactiveCommand<Unit, Unit> Create { get; }
+        
+        public ReactiveCommand<Pupil, Unit> Delete { get; }
 
         private ApplicationDataContext Database { get; } = new();
 
@@ -32,7 +58,6 @@ namespace ExamCalculator.UI
                 var avaloniaInstance = Pupils.ElementAt(e.Row.GetIndex());
                 var dbInstance = Database.Entry(avaloniaInstance);
                 dbInstance.CurrentValues.SetValues(avaloniaInstance);
-                Console.WriteLine($"Avalonia: {avaloniaInstance.FirstName}, DB: {dbInstance.Entity.FirstName}");
                 Database.SaveChanges();
             }
         }
