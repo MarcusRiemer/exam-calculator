@@ -1,8 +1,10 @@
 using System;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
+using Avalonia.VisualTree;
 
 namespace ExamCalculator.UI
 {
@@ -22,7 +24,15 @@ namespace ExamCalculator.UI
         private void OnSearchKey(object? sender, KeyEventArgs e)
         {
             var t = sender as TextBox;
-            ViewModel.OnSearchTextChanged(t.Text);
+            if (e.Key == Key.Enter)
+            {
+                
+                ViewModel.OnSeachAccept((Window)this.GetVisualRoot());
+            }
+            else
+            {
+                ViewModel.OnSearchTextChanged(t.Text);   
+            }
         }
     }
 }
