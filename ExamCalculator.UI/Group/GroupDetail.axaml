@@ -20,7 +20,7 @@
                   Items="{Binding GroupPupils}"
                   AutoGenerateColumns="True" />
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
+        <StackPanel Grid.Row="2" Classes="Toolbar">
             <TextBlock Text="Schüler:in hinzufügen: " />
             <TextBox TextInput="OnSearchTextChanged" KeyUp="OnSearchKey" />
         </StackPanel>

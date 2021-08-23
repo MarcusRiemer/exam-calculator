@@ -4,5 +4,11 @@
     <Application.Styles>
         <FluentTheme Mode="Light" />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+        <Style Selector="StackPanel.Toolbar">
+            <Setter Property="Orientation" Value="Horizontal"></Setter>
+        </Style>
+        <Style Selector="StackPanel.Toolbar > :is(Control)">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
     </Application.Styles>
 </Application>

@@ -12,11 +12,11 @@
         </Grid.RowDefinitions>
 
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <TextBlock Text="{Binding Caption}" VerticalAlignment="Center" />
-            <TextBox Watermark="Nummer (1a, 2d, ...)" VerticalAlignment="Center" />
-            <TextBox Watermark="Punkte" VerticalAlignment="Center" />
-            <Button Command="{Binding CreateTask}" VerticalAlignment="Center">+Aufgabe</Button>
+        <StackPanel Grid.Row="0" Classes="Toolbar">
+            <TextBlock Text="{Binding Caption}"  />
+            <TextBox Watermark="Nummer (1a, 2d, ...)" />
+            <TextBox Watermark="Punkte" />
+            <Button Command="{Binding CreateTask}">+Aufgabe</Button>
         </StackPanel>
 
 
