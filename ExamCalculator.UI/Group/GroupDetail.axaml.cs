@@ -13,6 +13,7 @@ namespace ExamCalculator.UI
         public GroupDetail()
         {
             AvaloniaXamlLoader.Load(this);
+            //var searchTerm = this.WhenAnyValue(x => x.SearchItem);
         }
 
         private void OnSearchTextChanged(object? sender, TextInputEventArgs e)

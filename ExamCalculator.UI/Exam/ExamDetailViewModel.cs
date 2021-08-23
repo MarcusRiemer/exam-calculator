@@ -2,6 +2,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using DynamicData;
 using ExamCalculator.Data;
 using Microsoft.EntityFrameworkCore;
@@ -16,39 +18,45 @@ namespace ExamCalculator.UI
             HostScreen = screen;
             ExamTasks = new ObservableCollection<ExamTask>();
 
-            RefreshData(examId);
+            ExamId = new BehaviorSubject<Guid>(examId);
+            Exam = ExamId
+                .Select(id => Database.Exams.Find(id));
+
+            Caption = Exam.Select(e => e.Name);
+            Exam.Select(curr =>
+                Database.ExamTasks
+                    .Where(et => et.ExamId == curr.ExamId)
+                    .OrderBy(e => e.Number)
+            ).Subscribe(res =>
+            {
+                ExamTasks.Clear();
+                ExamTasks.AddRange(res);
+            });
 
             CreateTask = ReactiveCommand.Create(
                 () =>
                 {
-                    Database.ExamTasks.Add(new ExamTask {ExamId = Exam.ExamId, ExamTaskId = Guid.NewGuid()});
+                    Database.ExamTasks.Add(new ExamTask {ExamId = ExamId.Value, ExamTaskId = Guid.NewGuid()});
                     Database.SaveChanges();
 
-                    RefreshData(examId);
+                    // Mark exam as changed
+                    ExamId.OnNext(ExamId.Value);
                 });
         }
 
-        public Exam Exam { get; private set; }
+        public Subject<Unit> ExamTasksChanged = new();
+
+        public BehaviorSubject<Guid> ExamId { get; }
+
+        public IObservable<Exam> Exam { get; }
 
         public ObservableCollection<ExamTask> ExamTasks { get; }
 
-        public string Caption => Exam.Name;
+        public IObservable<string> Caption { get; }
 
         public ReactiveCommand<Unit, Unit> CreateTask { get; }
 
         private ApplicationDataContext Database { get; } = new();
-
-        private void RefreshData(Guid examId)
-        {
-            Exam = Database.Exams.Find(examId);
-
-            var tasks = Database.ExamTasks
-                .Where(et => et.ExamId == examId)
-                .OrderBy(e => e.Number);
-            
-            ExamTasks.Clear();
-            ExamTasks.AddRange(tasks);
-        }
 
         // Reference to IScreen that owns the routable view model.
         public IScreen HostScreen { get; }

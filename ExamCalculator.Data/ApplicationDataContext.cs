@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace ExamCalculator.Data
 {
@@ -37,7 +38,7 @@ namespace ExamCalculator.Data
             // Useful for debugging
             options
                 .EnableSensitiveDataLogging()
-                .LogTo(Console.WriteLine);
+                .LogTo(Console.WriteLine, LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

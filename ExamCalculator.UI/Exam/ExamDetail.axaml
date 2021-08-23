@@ -13,7 +13,7 @@
 
 
         <StackPanel Grid.Row="0" Classes="Toolbar">
-            <TextBlock Text="{Binding Caption}"  />
+            <TextBlock Text="{Binding Caption^}"  />
             <TextBox Watermark="Nummer (1a, 2d, ...)" />
             <TextBox Watermark="Punkte" />
             <Button Command="{Binding CreateTask}">+Aufgabe</Button>
