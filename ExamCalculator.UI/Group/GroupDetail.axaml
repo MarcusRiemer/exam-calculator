@@ -14,18 +14,37 @@
         </Grid.RowDefinitions>
 
 
-        <TextBlock Text="{Binding Caption}" />
+        <TextBlock Text="{Binding Caption^}" />
 
         <DataGrid Grid.Row="1"
-                  Items="{Binding GroupPupils}"
-                  AutoGenerateColumns="True" />
+                  Items="{Binding GroupPupils}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Vorname" Width="*" Binding="{Binding FirstName}" />
+                <DataGridTextColumn Header="Nachname" Width="*" Binding="{Binding LastName}" />
+                <DataGridTemplateColumn Header="Aktionen">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Löschen"
+                                    Command="{Binding #groupDetail.DataContext.RemoveStudent}"
+                                    CommandParameter="{Binding .}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="ID" Binding="{Binding PupilId}" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
 
         <StackPanel Grid.Row="2" Classes="Toolbar">
-            <TextBlock Text="Schüler:in hinzufügen: " />
-            <TextBox TextInput="OnSearchTextChanged" KeyUp="OnSearchKey" />
+            <TextBox Text="{Binding PupilNameQuery}" KeyUp="OnSearchKey" Watermark="Name filtern" Width="256" />
+            <Button Content="Angezeigte Schüler:in hinzufügen" Click="OnClickAddPupil" />
         </StackPanel>
         <DataGrid Grid.Row="3"
-                  Items="{Binding AvailablePupils}"
-                  AutoGenerateColumns="True" />
+                  Items="{Binding AvailablePupils}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Vorname" Width="*" Binding="{Binding FirstName}" />
+                <DataGridTextColumn Header="Nachname" Width="*" Binding="{Binding LastName}" />
+                <DataGridTextColumn Header="ID" Binding="{Binding PupilId}" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

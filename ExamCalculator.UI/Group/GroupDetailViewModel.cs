@@ -1,6 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using Avalonia;
 using Avalonia.Controls;
 using DynamicData;
@@ -18,28 +21,49 @@ namespace ExamCalculator.UI
             HostScreen = screen;
             GroupPupils = new ObservableCollection<Pupil>();
             AvailablePupils = new ObservableCollection<Pupil>();
-            
-            RefreshData(groupId, "");
-        }
 
-        private void RefreshData(Guid groupId, String currentSearch)
-        {
-            Group = Database.Groups
-                .Include(g => g.Pupils)
-                .First(g => g.GroupId == groupId);
-            
-            GroupPupils.Clear();
-            GroupPupils.AddRange(Group.Pupils);
-            
-            // Students are available if they are not
-            var groupPupilIds = GroupPupils.Select(p => p.PupilId).ToArray();
-            AvailablePupils.Clear();
-            AvailablePupils.AddRange(SearchedResultSet(currentSearch).Where(p => !groupPupilIds.Contains(p.PupilId)));
-        }
+            Group = new BehaviorSubject<Group>(
+                Database.Groups
+                    .Include(g => g.Pupils)
+                    .First(g => g.GroupId == groupId)
+            );
 
-        public void OnSearchTextChanged(string currentSearch)
-        {
-            RefreshData(Group.GroupId, currentSearch);
+            Caption = Group.Select(g => g.Name);
+
+            Group.Subscribe(g =>
+                {
+                    GroupPupils.Clear();
+                    GroupPupils.AddRange(g.Pupils);
+                }
+            );
+
+            this.WhenAnyValue(vm => vm.PupilNameQuery)
+                .CombineLatest(Group)
+                .Subscribe(
+                    t =>
+                    {
+                        var query = t.First.ToLower();
+                        var group = t.Second;
+                        var groupPupilIds = GroupPupils.Select(p => p.PupilId).ToArray();
+                        var availablePupils = Database.Pupils
+                            .Where(p =>
+                                string.IsNullOrEmpty(query)
+                                || p.FirstName.ToLower().Contains(query)
+                                || p.LastName.ToLower().Contains(query)
+                            ).Where(p => !groupPupilIds.Contains(p.PupilId));
+
+                        AvailablePupils.Clear();
+                        AvailablePupils.AddRange(availablePupils);
+                    });
+            
+            RemoveStudent = ReactiveCommand.Create(
+                (Pupil p) =>
+                {
+                    Group.Value.Pupils.Remove(p);
+                    Database.SaveChanges();
+                    Group.OnNext(Group.Value);
+                }
+            );
         }
 
         public async void OnSeachAccept(Window window)
@@ -70,26 +94,31 @@ namespace ExamCalculator.UI
             {
                 foreach (var p in AvailablePupils)
                 {
-                    Group.Pupils.Add(p);
+                    Group.Value.Pupils.Add(p);
                 }
 
                 Database.SaveChanges();
+                Group.OnNext(Group.Value);
+                PupilNameQuery = "";
             }
         }
 
-        private IQueryable<Pupil> SearchedResultSet(string currentSearch) => Database.Pupils.Where(p =>
-            string.IsNullOrEmpty(currentSearch)
-            || p.FirstName.ToLower().Contains(currentSearch.ToLower())
-            || p.LastName.ToLower().Contains(currentSearch.ToLower())
-        );
+        private string _pupilNameQuery = "";
+        public string PupilNameQuery
+        {
+            get => _pupilNameQuery;
+            set => this.RaiseAndSetIfChanged(ref _pupilNameQuery, value);
+        }
 
-        public Group Group { get; private set; }
+        public BehaviorSubject<Group> Group { get; }
 
         public ObservableCollection<Pupil> GroupPupils { get; }
 
         public ObservableCollection<Pupil> AvailablePupils { get; }
 
-        public string Caption => Group.Name;
+        public IObservable<string> Caption { get; }
+        
+        public ReactiveCommand<Pupil, Unit> RemoveStudent { get; }
 
         private ApplicationDataContext Database { get; } = new();
 
