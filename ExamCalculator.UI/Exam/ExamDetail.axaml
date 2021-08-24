@@ -21,7 +21,8 @@
 
 
         <DataGrid Grid.Row="1"
-                  Items="{Binding ExamTasks}">
+                  Items="{Binding ExamTasks}"
+                  RowEditEnded="OnRowEditEnded">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nummer" Width="*" Binding="{Binding Number}" />
                 <DataGridTextColumn Header="Punkte" Width="*" Binding="{Binding MaximumPoints}" />

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
+using Avalonia.Controls;
 using DynamicData;
 using ExamCalculator.Data;
 using Microsoft.EntityFrameworkCore;
@@ -34,14 +36,32 @@ namespace ExamCalculator.UI
             });
 
             CreateTask = ReactiveCommand.Create(
-                () =>
+                async () =>
                 {
-                    Database.ExamTasks.Add(new ExamTask {ExamId = ExamId.Value, ExamTaskId = Guid.NewGuid()});
+                    var exam = await Exam.FirstAsync();
+                    var nextNumber = exam.NextNumber(Data.Exam.TaskInsertionIncrement.SubTask);
+                    Database.ExamTasks.Add(new ExamTask
+                    {
+                        ExamId = exam.ExamId,
+                        ExamTaskId = Guid.NewGuid(),
+                        Number = nextNumber.StringRepresentation
+                    });
                     Database.SaveChanges();
 
                     // Mark exam as changed
                     ExamId.OnNext(ExamId.Value);
                 });
+        }
+        
+        public void OnRowEditEnded(DataGridRowEditEndedEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var avaloniaInstance = ExamTasks.ElementAt(e.Row.GetIndex());
+                var dbInstance = Database.Entry(avaloniaInstance);
+                dbInstance.CurrentValues.SetValues(avaloniaInstance);
+                Database.SaveChanges();
+            }
         }
 
         public Subject<Unit> ExamTasksChanged = new();
@@ -54,7 +74,7 @@ namespace ExamCalculator.UI
 
         public IObservable<string> Caption { get; }
 
-        public ReactiveCommand<Unit, Unit> CreateTask { get; }
+        public ReactiveCommand<Unit, Task> CreateTask { get; }
 
         private ApplicationDataContext Database { get; } = new();
 

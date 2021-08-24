@@ -12,5 +12,10 @@ namespace ExamCalculator.UI
         {
             AvaloniaXamlLoader.Load(this);
         }
+
+        private void OnRowEditEnded(object? sender, DataGridRowEditEndedEventArgs e)
+        {
+            ViewModel.OnRowEditEnded(e);
+        }
     }
 }
