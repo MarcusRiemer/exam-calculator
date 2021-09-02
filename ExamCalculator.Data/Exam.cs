@@ -23,32 +23,23 @@ namespace ExamCalculator.Data
         /// </summary>
         public string Name { get; set; }
 
-        public ICollection<ExamTask> Tasks { get; set; }
+        public ICollection<ExamTask> Tasks { get; set; } = new List<ExamTask>();
 
-        public enum TaskInsertionIncrement
-        {
-            /// <summary>
-            /// Next number should increment the task number and have no subtask
-            /// </summary>
-            Task,
-            /// <summary>
-            /// Next number should be an incremented task number with the first subtask "a"
-            /// </summary>
-            TaskSubFirst,
-            /// <summary>
-            /// Next number should
-            /// </summary>
-            SubTask
-        }
+        public const int LAST_TASK_INDEX = Int32.MaxValue;
 
         /// <summary>
         /// Calculates the next free number for an assignment based on the existing numbers.
         /// </summary>
         /// <param name="inc">Mode to increment</param>
+        /// <param name="afterIndex">The index of the task to insert after</param>
         /// <returns>The next free number</returns>
-        public ExamTask.TaskNumber NextNumber(TaskInsertionIncrement inc)
+        public ExamTask.TaskNumber NextNumber(TaskInsertionIncrement inc, int afterIndex = LAST_TASK_INDEX)
         {
-            var lastTask = Tasks.OrderBy(t => t.Number).LastOrDefault();
+            var tasks = Tasks.OrderBy(t => t.Number);
+            var lastTask = afterIndex == LAST_TASK_INDEX 
+                ? tasks.LastOrDefault()
+                : tasks.ElementAtOrDefault(afterIndex);
+                
             // If there are no tasks at all the result must always be a first task
             // If the last task has no meaningful number: Just start new
             if (lastTask == null || string.IsNullOrEmpty(lastTask.Number))
@@ -89,5 +80,21 @@ namespace ExamCalculator.Data
                 return str.Substring(0, str.Length - 1) + (++last);
             }
         }
+    }
+
+    public enum TaskInsertionIncrement
+    {
+        /// <summary>
+        /// Next number should increment the task number and have no subtask
+        /// </summary>
+        Task,
+        /// <summary>
+        /// Next number should be an incremented task number with the first subtask "a"
+        /// </summary>
+        TaskSubFirst,
+        /// <summary>
+        /// Next number should
+        /// </summary>
+        SubTask
     }
 }

@@ -36,10 +36,16 @@ namespace ExamCalculator.UI
             });
 
             CreateTask = ReactiveCommand.Create(
-                async () =>
+                async (TaskInsertionIncrement inc) =>
                 {
+                    Console.Out.WriteLine($"Selected Index: {NewTaskSelectedIndex}");
+                    if (NewTaskSelectedIndex == -1)
+                    {
+                        NewTaskSelectedIndex = Data.Exam.LAST_TASK_INDEX;
+                    }
+                    
                     var exam = await Exam.FirstAsync();
-                    var nextNumber = exam.NextNumber(Data.Exam.TaskInsertionIncrement.SubTask);
+                    var nextNumber = exam.NextNumber(inc, NewTaskSelectedIndex);
                     Database.ExamTasks.Add(new ExamTask
                     {
                         ExamId = exam.ExamId,
@@ -86,9 +92,13 @@ namespace ExamCalculator.UI
 
         public IObservable<string> Caption { get; }
 
-        public ReactiveCommand<Unit, Task> CreateTask { get; }
+        public ReactiveCommand<TaskInsertionIncrement, Task> CreateTask { get; }
         
         public ReactiveCommand<ExamTask, Task> RemoveTask { get; }
+        
+        public int NewTaskSelectedIndex { get; set; }
+        
+        public int NewTaskCurrentPoints { get; set; }
 
         private ApplicationDataContext Database { get; } = new();
 

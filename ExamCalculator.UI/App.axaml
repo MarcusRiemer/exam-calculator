@@ -10,5 +10,9 @@
         <Style Selector="StackPanel.Toolbar > :is(Control)">
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
+        <Style Selector="TextBlock.PageTitle">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
     </Application.Styles>
 </Application>
