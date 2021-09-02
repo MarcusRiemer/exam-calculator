@@ -75,10 +75,7 @@ namespace ExamCalculator.UI
             CreateExamination = ReactiveCommand.Create(
                 async () =>
                 {
-                    if (NewExaminationGroup == null)
-                    {
-                        return;
-                    }
+                    if (NewExaminationGroup == null) return;
 
                     var exam = await Exam.FirstAsync();
                     var examination = exam.CreateExamination(DateTime.Today, NewExaminationGroup);
@@ -97,7 +94,7 @@ namespace ExamCalculator.UI
         public ObservableCollection<ExamTask> ExamTasks { get; }
 
         public IObservable<string> Caption { get; }
-        
+
         public ObservableCollection<Group> Groups { get; }
 
         public ReactiveCommand<TaskInsertionIncrement, Task> CreateTask { get; }
@@ -109,7 +106,7 @@ namespace ExamCalculator.UI
         public int NewTaskSelectedIndex { get; set; }
 
         public int NewTaskCurrentPoints { get; set; }
-        
+
         public Group NewExaminationGroup { get; set; }
 
         private ApplicationDataContext Database { get; } = new();

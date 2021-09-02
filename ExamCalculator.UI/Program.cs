@@ -23,8 +23,10 @@ namespace ExamCalculator.UI
             Locator.CurrentMutable.Register(() => new PupilOverview(), typeof(IViewFor<PupilOverviewViewModel>));
             Locator.CurrentMutable.Register(() => new ExamOverview(), typeof(IViewFor<ExamOverviewViewModel>));
             Locator.CurrentMutable.Register(() => new ExamDetail(), typeof(IViewFor<ExamDetailViewModel>));
-            Locator.CurrentMutable.Register(() => new ExaminationOverview(), typeof(IViewFor<ExaminationOverviewViewModel>));
-            Locator.CurrentMutable.Register(() => new ExaminationDetail(), typeof(IViewFor<ExaminationDetailViewModel>));
+            Locator.CurrentMutable.Register(() => new ExaminationOverview(),
+                typeof(IViewFor<ExaminationOverviewViewModel>));
+            Locator.CurrentMutable.Register(() => new ExaminationDetail(),
+                typeof(IViewFor<ExaminationDetailViewModel>));
             Locator.CurrentMutable.Register(() => new GroupOverview(), typeof(IViewFor<GroupOverviewViewModel>));
             Locator.CurrentMutable.Register(() => new GroupDetail(), typeof(IViewFor<GroupDetailViewModel>));
 

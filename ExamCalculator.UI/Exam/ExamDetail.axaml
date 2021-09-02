@@ -58,12 +58,12 @@
             <ComboBox Items="{Binding Groups}" SelectedItem="{Binding NewExaminationGroup}" SelectedIndex="0">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}"></TextBlock>
+                        <TextBlock Text="{Binding Name}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-                
+
             </ComboBox>
-            <Button Content="Prüfung erfassen" Command="{Binding CreateExamination}"></Button>
+            <Button Content="Prüfung erfassen" Command="{Binding CreateExamination}" />
         </StackPanel>
     </Grid>
 </UserControl>

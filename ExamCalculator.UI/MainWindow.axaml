@@ -27,7 +27,7 @@
             <TreeViewItem DataContext="{Binding GoExamOverview}" Header="Klausuren" />
             <TreeViewItem DataContext="{Binding GoExaminationOverview}" Header="Prüfungen" />
         </TreeView>
-        <reactiveUi:RoutedViewHost Grid.Row="1" Router="{Binding Router}" PageTransition="{x:Null}">
+        <reactiveUi:RoutedViewHost Router="{Binding Router}" PageTransition="{x:Null}">
             <reactiveUi:RoutedViewHost.DefaultContent>
                 <TextBlock Text="Huh, leer hier?!"
                            HorizontalAlignment="Center"

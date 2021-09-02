@@ -32,7 +32,7 @@ namespace ExamCalculator.UI
             Group = Examination.Select(examination => examination.Group);
 
             Caption = Examination.CombineLatest(Exam, Group)
-                .Select((t => $"Klausur \"{t.Second.Name}\" in Klasse {t.Third.Name} am {t.First.TakenOn}"));
+                .Select(t => $"Klausur \"{t.Second.Name}\" in Klasse {t.Third.Name} am {t.First.TakenOn}");
 
             ExaminationTaskResult = new ObservableCollection<ExaminationTaskResult>();
             ExaminationId.Select(
@@ -59,7 +59,7 @@ namespace ExamCalculator.UI
 
         public IObservable<Group> Group { get; }
 
-        public IObservable<String> Caption { get; }
+        public IObservable<string> Caption { get; }
 
         public ObservableCollection<ExaminationTaskResult> ExaminationTaskResult { get; }
 

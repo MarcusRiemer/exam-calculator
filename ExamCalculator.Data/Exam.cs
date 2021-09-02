@@ -35,18 +35,12 @@ namespace ExamCalculator.Data
 
         public Examination CreateExamination(DateTime takenOn, Group group)
         {
-            if (group.Pupils == null)
-            {
-                throw new ArgumentException($"{nameof(group.Pupils)} must be loaded");
-            }
+            if (group.Pupils == null) throw new ArgumentException($"{nameof(@group.Pupils)} must be loaded");
 
             var examination = new Examination
                 {ExaminationId = Guid.NewGuid(), Exam = this, TakenOn = takenOn, Group = group};
 
-            foreach (var pupil in group.Pupils)
-            {
-                examination.AddPupil(pupil);
-            }
+            foreach (var pupil in group.Pupils) examination.AddPupil(pupil);
 
             return examination;
         }
@@ -67,13 +61,11 @@ namespace ExamCalculator.Data
             // If there are no tasks at all the result must always be a first task
             // If the last task has no meaningful number: Just start new
             if (lastTask == null || string.IsNullOrEmpty(lastTask.Number))
-            {
                 return inc switch
                 {
                     TaskInsertionIncrement.Task => new ExamTask.TaskNumber(1, ""),
                     _ => new ExamTask.TaskNumber(1, "a")
                 };
-            }
 
             var (num, sub) = ExamTask.DecodeTaskNumber(lastTask.Number);
 
@@ -91,10 +83,7 @@ namespace ExamCalculator.Data
         /// </summary>
         private static string IncrementLastChar(string str)
         {
-            if (string.IsNullOrEmpty(str))
-            {
-                return "a";
-            }
+            if (string.IsNullOrEmpty(str)) return "a";
 
             var last = str.Last();
             return str.Substring(0, str.Length - 1) + ++last;

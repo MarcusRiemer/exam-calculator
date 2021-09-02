@@ -17,18 +17,21 @@
 
         <TabControl Grid.Row="1">
             <TabItem Header="Punkte Eintragen">
-                <DataGrid  Items="{Binding ExaminationTaskResult}" RowEditEnded="OnRowEditEnded">
+                <DataGrid Items="{Binding ExaminationTaskResult}" RowEditEnded="OnRowEditEnded">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Schüler:in" Width="*" Binding="{Binding Pupil.DisplayName}"
                                             IsReadOnly="True" />
                         <DataGridTextColumn Header="Aufgabe" Binding="{Binding ExamTask.Number}" IsReadOnly="True" />
-                        <DataGridTextColumn Header="Max Punkte" Binding="{Binding ExamTask.MaximumPoints}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Max Punkte" Binding="{Binding ExamTask.MaximumPoints}"
+                                            IsReadOnly="True" />
                         <DataGridTextColumn Header="Punkte" Binding="{Binding Score}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Ergebnisse"><TextBlock>Kommen noch</TextBlock></TabItem>
+            <TabItem Header="Ergebnisse">
+                <TextBlock>Kommen noch</TextBlock>
+            </TabItem>
         </TabControl>
-        
+
     </Grid>
 </UserControl>
