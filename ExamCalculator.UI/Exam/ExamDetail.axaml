@@ -26,6 +26,15 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nummer" Width="*" Binding="{Binding Number}" />
                 <DataGridTextColumn Header="Punkte" Width="*" Binding="{Binding MaximumPoints}" />
+                <DataGridTemplateColumn Header="Aktionen">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Löschen"
+                                    Command="{Binding #examDetail.DataContext.RemoveTask}"
+                                    CommandParameter="{Binding .}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 

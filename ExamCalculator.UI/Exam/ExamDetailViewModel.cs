@@ -51,6 +51,18 @@ namespace ExamCalculator.UI
                     // Mark exam as changed
                     ExamId.OnNext(ExamId.Value);
                 });
+            
+            RemoveTask = ReactiveCommand.Create(
+                async (ExamTask task) =>
+                {
+                    var exam = await Exam.FirstAsync();
+                    exam.Tasks.Remove(task);
+                    
+                    Database.SaveChanges();
+
+                    // Mark exam as changed
+                    ExamId.OnNext(ExamId.Value);
+                });
         }
         
         public void OnRowEditEnded(DataGridRowEditEndedEventArgs e)
@@ -75,6 +87,8 @@ namespace ExamCalculator.UI
         public IObservable<string> Caption { get; }
 
         public ReactiveCommand<Unit, Task> CreateTask { get; }
+        
+        public ReactiveCommand<ExamTask, Task> RemoveTask { get; }
 
         private ApplicationDataContext Database { get; } = new();
 
