@@ -2,8 +2,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using ExamCalculator.Data;
+using MessageBox.Avalonia;
+using MessageBox.Avalonia.Enums;
 using ReactiveUI;
 
 namespace ExamCalculator.UI
@@ -27,12 +30,23 @@ namespace ExamCalculator.UI
                 });
 
             Delete = ReactiveCommand.Create(
-                (Exam exam) =>
+                async (Exam exam) =>
                 {
-                    Database.Exams.Remove(exam);
-                    Database.SaveChanges();
+                    var count = Database.Examinations.Count(ex => ex.ExamId == exam.ExamId);
+                    var box = MessageBoxManager.GetMessageBoxStandardWindow(
+                        "Vorsicht: Zu dieser Klausur existieren Ergebnisse!",
+                        $"Wenn diese Klausur gelöscht wird, werden auch {count} Prüfungen gelöscht! Wirklich löschen?",
+                        ButtonEnum.YesNo
+                    );
+                    var result = await box.Show();
+                    var doDelete = result == ButtonResult.Yes;
+                    if (doDelete)
+                    {
+                        Database.Exams.Remove(exam);
+                        Database.SaveChanges();
 
-                    Exams.Remove(exam);
+                        Exams.Remove(exam);
+                    }
                 }
             );
 
@@ -45,7 +59,7 @@ namespace ExamCalculator.UI
 
         public ReactiveCommand<Unit, Unit> Create { get; }
 
-        public ReactiveCommand<Exam, Unit> Delete { get; }
+        public ReactiveCommand<Exam, Task> Delete { get; }
 
         public ReactiveCommand<Guid, IRoutableViewModel> GoDetails { get; }
 
