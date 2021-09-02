@@ -1,4 +1,3 @@
-using System.Runtime.Intrinsics.X86;
 using NUnit.Framework;
 
 namespace ExamCalculator.Data.Test
@@ -13,7 +12,7 @@ namespace ExamCalculator.Data.Test
             Assert.AreEqual(new ExamTask.TaskNumber(2, ""), ExamTask.DecodeTaskNumber("2"));
             Assert.AreEqual(new ExamTask.TaskNumber(12, ""), ExamTask.DecodeTaskNumber("12"));
         }
-        
+
         [Test]
         public void NumberMixed()
         {

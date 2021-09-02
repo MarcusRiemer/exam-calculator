@@ -15,10 +15,10 @@ namespace ExamCalculator.Data
 
         public Guid ExaminationId { get; set; }
         public Examination Examination { get; set; }
-        
+
         public Guid ExamTaskId { get; set; }
         public ExamTask ExamTask { get; set; }
-        
+
         public int? Score { get; set; }
     }
 }

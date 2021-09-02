@@ -14,7 +14,7 @@ namespace ExamCalculator.UI
         {
             HostScreen = screen;
             Exams = new ObservableCollection<Exam>(Database.Exams);
-            
+
             Create = ReactiveCommand.Create(
                 () =>
                 {
@@ -25,7 +25,7 @@ namespace ExamCalculator.UI
 
                     Exams.Add(exam.Entity);
                 });
-            
+
             Delete = ReactiveCommand.Create(
                 (Exam exam) =>
                 {
@@ -35,12 +35,28 @@ namespace ExamCalculator.UI
                     Exams.Remove(exam);
                 }
             );
-            
+
             GoDetails = ReactiveCommand.CreateFromObservable(
                 (Guid examId) => router.Navigate.Execute(new ExamDetailViewModel(screen, examId))
             );
         }
-        
+
+        public ObservableCollection<Exam> Exams { get; }
+
+        public ReactiveCommand<Unit, Unit> Create { get; }
+
+        public ReactiveCommand<Exam, Unit> Delete { get; }
+
+        public ReactiveCommand<Guid, IRoutableViewModel> GoDetails { get; }
+
+        private ApplicationDataContext Database { get; } = new();
+
+        // Reference to IScreen that owns the routable view model.
+        public IScreen HostScreen { get; }
+
+        // Unique identifier for the routable view model.
+        public string UrlPathSegment { get; } = "/exam";
+
         public void OnRowEditEnded(DataGridRowEditEndedEventArgs e)
         {
             if (e.EditAction == DataGridEditAction.Commit)
@@ -51,21 +67,5 @@ namespace ExamCalculator.UI
                 Database.SaveChanges();
             }
         }
-        
-        public ObservableCollection<Exam> Exams { get; }
-        
-        public ReactiveCommand<Unit, Unit> Create { get; }
-        
-        public ReactiveCommand<Exam, Unit> Delete { get; }
-        
-        public ReactiveCommand<Guid, IRoutableViewModel> GoDetails { get; }
-
-        private ApplicationDataContext Database { get; } = new();
-
-        // Reference to IScreen that owns the routable view model.
-        public IScreen HostScreen { get; }
-
-        // Unique identifier for the routable view model.
-        public string UrlPathSegment { get; } = "/exam";
     }
 }

@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ExamCalculator.UI.ExamDetail"
              Name="examDetail">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -18,43 +18,39 @@
         <StackPanel Grid.Row="0" Classes="Toolbar">
             <TextBlock Text="{Binding Caption^}" Classes="PageTitle" />
         </StackPanel>
-        
 
-         
-                <Grid Grid.Row="1" Classes="Toolbar">
-                    <TextBlock>1. Aufgaben verwalten</TextBlock>
-                    <StackPanel Classes="Toolbar" HorizontalAlignment="Right">
-                        <TextBlock>Punkte</TextBlock>
-                        <NumericUpDown Watermark="Punkte" Value="{Binding NewTaskCurrentPoints}" />
-                        <Button Command="{Binding CreateTask}" Content="+ Oberaufgabe(1, 2, 3)"
-                                CommandParameter="{x:Static data:TaskInsertionIncrement.Task}" />
-                        <Button Command="{Binding CreateTask}" Content="+ Oberaufgabe(1a, 2a, 3a)"
-                                CommandParameter="{x:Static data:TaskInsertionIncrement.TaskSubFirst}" />
-                        <Button Command="{Binding CreateTask}" Content="+ Unteraufgabe(1b, 1c, 1d)"
-                                CommandParameter="{x:Static data:TaskInsertionIncrement.SubTask}" />
-                    </StackPanel>
-                </Grid>
-                
-                <DataGrid Grid.Row="2" Items="{Binding ExamTasks}"
-                          SelectedIndex="{Binding NewTaskSelectedIndex}"
-                          RowEditEnded="OnRowEditEnded">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Nummer" Width="*" Binding="{Binding Number}" />
-                        <DataGridTextColumn Header="Punkte" Width="*" Binding="{Binding MaximumPoints}" />
-                        <DataGridTemplateColumn Header="Aktionen">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="Löschen"
-                                            Command="{Binding #examDetail.DataContext.RemoveTask}"
-                                            CommandParameter="{Binding .}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-      
-        
-        
+
+        <Grid Grid.Row="1" Classes="Toolbar">
+            <TextBlock>1. Aufgaben verwalten</TextBlock>
+            <StackPanel Classes="Toolbar" HorizontalAlignment="Right">
+                <TextBlock>Punkte</TextBlock>
+                <NumericUpDown Watermark="Punkte" Value="{Binding NewTaskCurrentPoints}" />
+                <Button Command="{Binding CreateTask}" Content="+ Oberaufgabe(1, 2, 3)"
+                        CommandParameter="{x:Static data:TaskInsertionIncrement.Task}" />
+                <Button Command="{Binding CreateTask}" Content="+ Oberaufgabe(1a, 2a, 3a)"
+                        CommandParameter="{x:Static data:TaskInsertionIncrement.TaskSubFirst}" />
+                <Button Command="{Binding CreateTask}" Content="+ Unteraufgabe(1b, 1c, 1d)"
+                        CommandParameter="{x:Static data:TaskInsertionIncrement.SubTask}" />
+            </StackPanel>
+        </Grid>
+
+        <DataGrid Grid.Row="2" Items="{Binding ExamTasks}"
+                  SelectedIndex="{Binding NewTaskSelectedIndex}"
+                  RowEditEnded="OnRowEditEnded">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nummer" Width="*" Binding="{Binding Number}" />
+                <DataGridTextColumn Header="Punkte" Width="*" Binding="{Binding MaximumPoints}" />
+                <DataGridTemplateColumn Header="Aktionen">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Löschen"
+                                    Command="{Binding #examDetail.DataContext.RemoveTask}"
+                                    CommandParameter="{Binding .}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
 
     </Grid>

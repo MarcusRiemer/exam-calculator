@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
 
-        <TextBlock Text="{Binding Caption^}" Classes="PageTitle"/>
+        <TextBlock Text="{Binding Caption^}" Classes="PageTitle" />
 
         <DataGrid Grid.Row="1"
                   Items="{Binding GroupPupils}">

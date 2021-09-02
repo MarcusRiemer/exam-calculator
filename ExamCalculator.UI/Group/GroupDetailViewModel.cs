@@ -4,10 +4,10 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using Avalonia;
 using Avalonia.Controls;
 using DynamicData;
 using ExamCalculator.Data;
+using MessageBox.Avalonia;
 using MessageBox.Avalonia.Enums;
 using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
@@ -16,6 +16,8 @@ namespace ExamCalculator.UI
 {
     public class GroupDetailViewModel : ReactiveObject, IRoutableViewModel
     {
+        private string _pupilNameQuery = "";
+
         public GroupDetailViewModel(IScreen screen, Guid groupId)
         {
             HostScreen = screen;
@@ -55,7 +57,7 @@ namespace ExamCalculator.UI
                         AvailablePupils.Clear();
                         AvailablePupils.AddRange(availablePupils);
                     });
-            
+
             RemoveStudent = ReactiveCommand.Create(
                 (Pupil p) =>
                 {
@@ -66,44 +68,6 @@ namespace ExamCalculator.UI
             );
         }
 
-        public async void OnSeachAccept(Window window)
-        {
-            var count = AvailablePupils.Count;
-            bool doAdd = count == 1;
-            if (count > 1)
-            {
-                var box = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(
-                    "Auswahl nicht eindeutig",
-                    $"Wirklich {count} Schüler:innen zu dieser Klasse hinzufügen?",
-                    ButtonEnum.YesNo
-                );
-                var result = await box.ShowDialog(window);
-                doAdd = result == ButtonResult.Yes;
-            }
-            else if (count == 0)
-            {
-                var box = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(
-                    "Keine Schüler:innen ausgewählt",
-                    "Sofern die Namen von Schüler:innen in der aktuellen Liste auftauchen, könnten diese der Klasse hinzugefügt werden",
-                    ButtonEnum.Ok
-                );
-                await box.ShowDialog(window);
-            }
-
-            if (doAdd)
-            {
-                foreach (var p in AvailablePupils)
-                {
-                    Group.Value.Pupils.Add(p);
-                }
-
-                Database.SaveChanges();
-                Group.OnNext(Group.Value);
-                PupilNameQuery = "";
-            }
-        }
-
-        private string _pupilNameQuery = "";
         public string PupilNameQuery
         {
             get => _pupilNameQuery;
@@ -117,7 +81,7 @@ namespace ExamCalculator.UI
         public ObservableCollection<Pupil> AvailablePupils { get; }
 
         public IObservable<string> Caption { get; }
-        
+
         public ReactiveCommand<Pupil, Unit> RemoveStudent { get; }
 
         private ApplicationDataContext Database { get; } = new();
@@ -127,5 +91,38 @@ namespace ExamCalculator.UI
 
         // Unique identifier for the routable view model.
         public string UrlPathSegment { get; } = "/group";
+
+        public async void OnSeachAccept(Window window)
+        {
+            var count = AvailablePupils.Count;
+            var doAdd = count == 1;
+            if (count > 1)
+            {
+                var box = MessageBoxManager.GetMessageBoxStandardWindow(
+                    "Auswahl nicht eindeutig",
+                    $"Wirklich {count} Schüler:innen zu dieser Klasse hinzufügen?",
+                    ButtonEnum.YesNo
+                );
+                var result = await box.ShowDialog(window);
+                doAdd = result == ButtonResult.Yes;
+            }
+            else if (count == 0)
+            {
+                var box = MessageBoxManager.GetMessageBoxStandardWindow(
+                    "Keine Schüler:innen ausgewählt",
+                    "Sofern die Namen von Schüler:innen in der aktuellen Liste auftauchen, könnten diese der Klasse hinzugefügt werden"
+                );
+                await box.ShowDialog(window);
+            }
+
+            if (doAdd)
+            {
+                foreach (var p in AvailablePupils) Group.Value.Pupils.Add(p);
+
+                Database.SaveChanges();
+                Group.OnNext(Group.Value);
+                PupilNameQuery = "";
+            }
+        }
     }
 }

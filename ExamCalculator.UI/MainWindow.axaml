@@ -24,7 +24,7 @@
                 <TabStripItem Content="Prüfungen" IsEnabled="False" />
             </TabStrip>
         </StackPanel>
-        <reactiveUi:RoutedViewHost Grid.Row="1" Router="{Binding Router}" PageTransition="{x:Null}" >
+        <reactiveUi:RoutedViewHost Grid.Row="1" Router="{Binding Router}" PageTransition="{x:Null}">
             <reactiveUi:RoutedViewHost.DefaultContent>
                 <TextBlock Text="Huh, leer hier?!"
                            HorizontalAlignment="Center"

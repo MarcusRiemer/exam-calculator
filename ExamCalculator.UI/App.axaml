@@ -5,14 +5,14 @@
         <FluentTheme Mode="Light" />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
         <Style Selector="StackPanel.Toolbar">
-            <Setter Property="Orientation" Value="Horizontal"></Setter>
+            <Setter Property="Orientation" Value="Horizontal" />
         </Style>
         <Style Selector=".Toolbar > :is(Control)">
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
         <Style Selector="TextBlock.PageTitle">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontWeight" Value="Bold" />
         </Style>
     </Application.Styles>
 </Application>

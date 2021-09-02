@@ -25,7 +25,7 @@ namespace ExamCalculator.UI
 
                     Pupils.Add(pupil.Entity);
                 });
-            
+
             Delete = ReactiveCommand.Create(
                 (Pupil pupil) =>
                 {
@@ -38,7 +38,7 @@ namespace ExamCalculator.UI
         }
 
         public ReactiveCommand<Unit, Unit> Create { get; }
-        
+
         public ReactiveCommand<Pupil, Unit> Delete { get; }
 
         private ApplicationDataContext Database { get; } = new();

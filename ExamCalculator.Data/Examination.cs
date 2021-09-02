@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ExamCalculator.Data
 {
     /// <summary>
-    /// A specific exam that was taken by students
+    ///     A specific exam that was taken by students
     /// </summary>
     public class Examination
     {
@@ -24,10 +24,8 @@ namespace ExamCalculator.Data
         public void AddPupil(Pupil p)
         {
             foreach (var task in Exam.Tasks)
-            {
                 Results.Add(new ExaminationTaskResult
                     {Examination = this, Pupil = p, ExamTask = task});
-            }
         }
     }
 }

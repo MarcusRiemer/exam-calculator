@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reactive;
 using Avalonia.Controls;
 using ExamCalculator.Data;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ReactiveUI;
 
 namespace ExamCalculator.UI

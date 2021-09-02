@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using DynamicData;
 using ExamCalculator.Data;
-using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 
 namespace ExamCalculator.UI
 {
     public class ExamDetailViewModel : ReactiveObject, IRoutableViewModel
     {
+        public Subject<Unit> ExamTasksChanged = new();
+
         public ExamDetailViewModel(IScreen screen, Guid examId)
         {
             HostScreen = screen;
@@ -39,11 +40,8 @@ namespace ExamCalculator.UI
                 async (TaskInsertionIncrement inc) =>
                 {
                     Console.Out.WriteLine($"Selected Index: {NewTaskSelectedIndex}");
-                    if (NewTaskSelectedIndex == -1)
-                    {
-                        NewTaskSelectedIndex = Data.Exam.LAST_TASK_INDEX;
-                    }
-                    
+                    if (NewTaskSelectedIndex == -1) NewTaskSelectedIndex = Data.Exam.LAST_TASK_INDEX;
+
                     var exam = await Exam.FirstAsync();
                     var nextNumber = exam.NextNumber(inc, NewTaskSelectedIndex);
                     Database.ExamTasks.Add(new ExamTask
@@ -58,32 +56,19 @@ namespace ExamCalculator.UI
                     // Mark exam as changed
                     ExamId.OnNext(ExamId.Value);
                 });
-            
+
             RemoveTask = ReactiveCommand.Create(
                 async (ExamTask task) =>
                 {
                     var exam = await Exam.FirstAsync();
                     exam.Tasks.Remove(task);
-                    
+
                     Database.SaveChanges();
 
                     // Mark exam as changed
                     ExamId.OnNext(ExamId.Value);
                 });
         }
-        
-        public void OnRowEditEnded(DataGridRowEditEndedEventArgs e)
-        {
-            if (e.EditAction == DataGridEditAction.Commit)
-            {
-                var avaloniaInstance = ExamTasks.ElementAt(e.Row.GetIndex());
-                var dbInstance = Database.Entry(avaloniaInstance);
-                dbInstance.CurrentValues.SetValues(avaloniaInstance);
-                Database.SaveChanges();
-            }
-        }
-
-        public Subject<Unit> ExamTasksChanged = new();
 
         public BehaviorSubject<Guid> ExamId { get; }
 
@@ -94,11 +79,11 @@ namespace ExamCalculator.UI
         public IObservable<string> Caption { get; }
 
         public ReactiveCommand<TaskInsertionIncrement, Task> CreateTask { get; }
-        
+
         public ReactiveCommand<ExamTask, Task> RemoveTask { get; }
-        
+
         public int NewTaskSelectedIndex { get; set; }
-        
+
         public int NewTaskCurrentPoints { get; set; }
 
         private ApplicationDataContext Database { get; } = new();
@@ -108,5 +93,16 @@ namespace ExamCalculator.UI
 
         // Unique identifier for the routable view model.
         public string UrlPathSegment { get; } = "/exam/:id";
+
+        public void OnRowEditEnded(DataGridRowEditEndedEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                var avaloniaInstance = ExamTasks.ElementAt(e.Row.GetIndex());
+                var dbInstance = Database.Entry(avaloniaInstance);
+                dbInstance.CurrentValues.SetValues(avaloniaInstance);
+                Database.SaveChanges();
+            }
+        }
     }
 }

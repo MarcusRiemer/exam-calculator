@@ -2,18 +2,17 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.RegularExpressions;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace ExamCalculator.Data
 {
     /// <summary>
-    /// A single task that a pupil has to solve as part of an exam.
+    ///     A single task that a pupil has to solve as part of an exam.
     /// </summary>
     [Table(nameof(ExamTask) + "s")]
     public class ExamTask
     {
         /// <summary>
-        /// Valid numbers are defined by this regular expression
+        ///     Valid numbers are defined by this regular expression
         /// </summary>
         public static readonly Regex NumberRegex = new("(?<Num>[0-9]+)(?<Task>[a-zA-Z]*)");
 
@@ -22,35 +21,26 @@ namespace ExamCalculator.Data
         public Guid ExamTaskId { get; set; }
 
         /// <summary>
-        /// Sortable representation of a number with tasks and sub tasks (1a, 2b) ...
+        ///     Sortable representation of a number with tasks and sub tasks (1a, 2b) ...
         /// </summary>
-        ///
         /// Yes, this sort of violates the first normal form, but it is properly sortable
         /// and on top of that quite flexibel if any teacher insists on strange ways to
         /// sort things.
         public string Number { get; set; }
 
-        [NotMapped]
-        public bool IsNumberValid => Number != null && NumberRegex.IsMatch(Number);
+        [NotMapped] public bool IsNumberValid => Number != null && NumberRegex.IsMatch(Number);
 
         /// <summary>
-        /// How many points a pupil would retrieve if the question is answerred 100% correct.
+        ///     How many points a pupil would retrieve if the question is answerred 100% correct.
         /// </summary>
         public float MaximumPoints { get; set; }
 
         /// <summary>
-        /// The exam this task is part of.
+        ///     The exam this task is part of.
         /// </summary>
         public Exam Exam { get; set; }
-        public Guid ExamId { get; set; }
 
-        /// <summary>
-        /// Proper decomposition of a task number in the two parts of the hierarchy.
-        /// </summary>
-        public record TaskNumber(int num, string sub)
-        {
-            public string StringRepresentation => $"{num}{sub}";
-        };
+        public Guid ExamId { get; set; }
 
         public static TaskNumber DecodeTaskNumber(string number)
         {
@@ -61,6 +51,14 @@ namespace ExamCalculator.Data
                 int.Parse(relevant.Groups["Num"].Value),
                 relevant.Groups["Task"].Value
             );
+        }
+
+        /// <summary>
+        ///     Proper decomposition of a task number in the two parts of the hierarchy.
+        /// </summary>
+        public record TaskNumber(int num, string sub)
+        {
+            public string StringRepresentation => $"{num}{sub}";
         }
     }
 }

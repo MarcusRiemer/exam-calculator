@@ -36,7 +36,7 @@ namespace ExamCalculator.Data.Test
             Assert.AreEqual(new ExamTask.TaskNumber(2, "a"), exam.NextNumber(TaskInsertionIncrement.TaskSubFirst, 0));
             Assert.AreEqual(new ExamTask.TaskNumber(1, "b"), exam.NextNumber(TaskInsertionIncrement.SubTask, 0));
         }
-        
+
         [Test]
         public void NextNumber_1a_2a_End()
         {

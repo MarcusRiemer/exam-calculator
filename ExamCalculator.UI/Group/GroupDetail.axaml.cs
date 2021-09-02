@@ -1,5 +1,3 @@
-using System;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -22,14 +20,14 @@ namespace ExamCalculator.UI
             var t = sender as TextBox;
             if (e.Key == Key.Enter)
             {
-                ViewModel.OnSeachAccept((Window)this.GetVisualRoot());
+                ViewModel.OnSeachAccept((Window) this.GetVisualRoot());
                 e.Handled = true;
             }
         }
 
         private void OnClickAddPupil(object? sender, RoutedEventArgs e)
         {
-            ViewModel.OnSeachAccept((Window)this.GetVisualRoot());
+            ViewModel.OnSeachAccept((Window) this.GetVisualRoot());
         }
     }
 }
