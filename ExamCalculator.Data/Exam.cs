@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,13 +8,11 @@ using System.Linq;
 namespace ExamCalculator.Data
 {
     /// <summary>
-    /// A set of tasks that must be solved by students.
+    /// A set of tasks that must be solved by students. This should be seen as a template for examinations, because
+    /// the same exam may be presented to different groups of students.
     /// </summary>
     public class Exam
     {
-        /// <summary>
-        /// 
-        /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid ExamId { get; set; }
@@ -23,9 +22,29 @@ namespace ExamCalculator.Data
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The tasks that are to be solved as part of this exam.
+        /// </summary>
         public ICollection<ExamTask> Tasks { get; set; } = new List<ExamTask>();
 
+        /// <summary>
+        /// The attempts made by students to solve this exam.
+        /// </summary>
+        public ICollection<Examination> Examinations { get; set; } = new List<Examination>();
+
         public const int LAST_TASK_INDEX = Int32.MaxValue;
+
+        public Examination CreateExamination(DateTime takenOn, IEnumerable<Pupil> pupils)
+        {
+            var examination = new Examination {Exam = this, TakenOn = takenOn, ExaminationId = Guid.NewGuid()};
+
+            foreach (var pupil in pupils)
+            {
+                examination.AddPupil(pupil);
+            }
+            
+            return examination;
+        }
 
         /// <summary>
         /// Calculates the next free number for an assignment based on the existing numbers.
