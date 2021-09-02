@@ -37,4 +37,7 @@
           <SubType>Code</SubType>
         </Compile>
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Examination" />
+    </ItemGroup>
 </Project>

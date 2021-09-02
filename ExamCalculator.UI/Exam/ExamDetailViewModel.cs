@@ -50,7 +50,8 @@ namespace ExamCalculator.UI
                     {
                         ExamId = exam.ExamId,
                         ExamTaskId = Guid.NewGuid(),
-                        Number = nextNumber.StringRepresentation
+                        Number = nextNumber.StringRepresentation,
+                        MaximumPoints = NewTaskCurrentPoints
                     });
                     Database.SaveChanges();
 

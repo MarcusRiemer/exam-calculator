@@ -7,7 +7,7 @@
         <Style Selector="StackPanel.Toolbar">
             <Setter Property="Orientation" Value="Horizontal"></Setter>
         </Style>
-        <Style Selector="StackPanel.Toolbar > :is(Control)">
+        <Style Selector=".Toolbar > :is(Control)">
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
         <Style Selector="TextBlock.PageTitle">
