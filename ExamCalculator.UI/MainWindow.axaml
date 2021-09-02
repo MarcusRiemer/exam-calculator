@@ -2,29 +2,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:ExamCalculator.Data;assembly=ExamCalculator.Data"
         xmlns:reactiveUi="http://reactiveui.net"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ExamCalculator.UI.MainWindow"
+        Name="mainWindow"
         Title="ExamCalculator.UI">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <!--
-            <Button Content="Schüler &amp; Klassen" Command="{Binding GoPupilOverview}" />
-            <Button Content="Klausuren" Command="{Binding GoNext}" />
-            <Button Content="Zurück" Command="{Binding GoBack}" />
-            -->
-            <TabStrip>
-                <TabStripItem Content="Klassen" Tapped="OnNavigateGroups" />
-                <TabStripItem Content="Schüler" Tapped="OnNavigatePupils" />
-                <TabStripItem Content="Klausuren" Tapped="OnNavigateExams" />
-                <TabStripItem Content="Prüfungen" Tapped="OnNavigateExaminations" />
-            </TabStrip>
-        </StackPanel>
-        <reactiveUi:RoutedViewHost Grid.Row="1" Router="{Binding Router}" PageTransition="{x:Null}" Padding="4">
+    <DockPanel>
+        <TabStrip DockPanel.Dock="Top" IsVisible="{Binding !IsNewNavigation}">
+            <TabStripItem Content="Klassen" Tapped="OnNavigateGroups" />
+            <TabStripItem Content="Schüler" Tapped="OnNavigatePupils" />
+            <TabStripItem Content="Klausuren" Tapped="OnNavigateExams" />
+            <TabStripItem Content="Prüfungen" Tapped="OnNavigateExaminations" />
+        </TabStrip>
+        <TreeView DockPanel.Dock="Left" IsVisible="{Binding IsNewNavigation}" SelectionChanged="OnTreeItemSelected">
+            <TreeView.DataTemplates>
+                <TreeDataTemplate DataType="models:Group">
+                    <TextBlock Text="{Binding Name}" />
+                </TreeDataTemplate>
+            </TreeView.DataTemplates>
+            <TreeViewItem DataContext="{Binding GoGroupOverview}" Header="Klassen"
+                          Items="{Binding #mainWindow.DataContext.SidebarGroups}" />
+            <TreeViewItem DataContext="{Binding GoPupilOverview}" Header="Schüler" />
+            <TreeViewItem DataContext="{Binding GoExamOverview}" Header="Klausuren" />
+            <TreeViewItem DataContext="{Binding GoExaminationOverview}" Header="Prüfungen" />
+        </TreeView>
+        <reactiveUi:RoutedViewHost Grid.Row="1" Router="{Binding Router}" PageTransition="{x:Null}">
             <reactiveUi:RoutedViewHost.DefaultContent>
                 <TextBlock Text="Huh, leer hier?!"
                            HorizontalAlignment="Center"
@@ -32,5 +35,5 @@
             </reactiveUi:RoutedViewHost.DefaultContent>
         </reactiveUi:RoutedViewHost>
 
-    </Grid>
+    </DockPanel>
 </Window>

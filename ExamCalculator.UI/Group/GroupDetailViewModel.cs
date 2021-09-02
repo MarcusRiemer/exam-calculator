@@ -30,7 +30,7 @@ namespace ExamCalculator.UI
                     .First(g => g.GroupId == groupId)
             );
 
-            Caption = Group.Select(g => g.Name);
+            Caption = Group.Select(g => $"Klasse {g.Name}");
 
             Group.Subscribe(g =>
                 {

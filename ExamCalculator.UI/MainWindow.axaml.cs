@@ -1,4 +1,8 @@
+using System;
+using System.Linq;
+using System.Reactive;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
@@ -37,6 +41,35 @@ namespace ExamCalculator.UI
         private void OnNavigateExaminations(object? sender, RoutedEventArgs e)
         {
             ViewModel.GoExaminationOverview.Execute();
+        }
+
+
+        private void OnNavigateGroupDetail(object? sender, RoutedEventArgs e)
+        {
+            var group = ((sender as TextBlock).DataContext as Group);
+            ViewModel.GoGroupDetail.Execute(group.GroupId);
+            e.Handled = true;
+        }
+
+        private void OnTreeItemSelected(object? sender, SelectionChangedEventArgs e)
+        {
+            Object senderData = null;
+            if (e.AddedItems.Count == 1)
+            {
+                senderData = e.AddedItems[0];
+            }
+            
+            switch (senderData)
+            {
+                case Group g: 
+                    ViewModel.GoGroupDetail.Execute(g.GroupId);
+                    break;
+                case TreeViewItem t:
+                    if (t.DataContext is ReactiveCommand<Unit, IRoutableViewModel> c)
+                        c.Execute();
+                    break;
+                
+            }
         }
     }
 }
