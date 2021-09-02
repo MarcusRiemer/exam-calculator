@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
 
@@ -52,6 +53,17 @@
             </DataGrid.Columns>
         </DataGrid>
 
-
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Classes="Toolbar">
+            <TextBlock>Klasse: </TextBlock>
+            <ComboBox Items="{Binding Groups}" SelectedItem="{Binding NewExaminationGroup}" SelectedIndex="0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                
+            </ComboBox>
+            <Button Content="Prüfung erfassen" Command="{Binding CreateExamination}"></Button>
+        </StackPanel>
     </Grid>
 </UserControl>

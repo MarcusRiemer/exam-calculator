@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ExamCalculator.UI.ExaminationOverview"
+             Name="examinationOverview">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="1"
+                  Items="{Binding Examinations}"
+                  RowEditEnded="OnRowEditEnded">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Klausurname" Binding="{Binding Exam.Name}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Datum" Binding="{Binding TakenOn}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Klasse" Binding="{Binding Group.Name}" IsReadOnly="True" />
+                <DataGridTemplateColumn Header="Aktionen">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Details"
+                                        Command="{Binding #examinationOverview.DataContext.GoDetails}"
+                                        CommandParameter="{Binding ExaminationId}" />
+                                <Button Content="Löschen"
+                                        Command="{Binding #examinationOverview.DataContext.Delete}"
+                                        CommandParameter="{Binding .}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="ID" Binding="{Binding ExamId}" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

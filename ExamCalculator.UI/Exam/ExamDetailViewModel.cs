@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using DynamicData;
 using ExamCalculator.Data;
+using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 
 namespace ExamCalculator.UI
@@ -16,7 +17,7 @@ namespace ExamCalculator.UI
     {
         public Subject<Unit> ExamTasksChanged = new();
 
-        public ExamDetailViewModel(IScreen screen, Guid examId)
+        public ExamDetailViewModel(IScreen screen, RoutingState router, Guid examId)
         {
             HostScreen = screen;
             ExamTasks = new ObservableCollection<ExamTask>();
@@ -35,6 +36,8 @@ namespace ExamCalculator.UI
                 ExamTasks.Clear();
                 ExamTasks.AddRange(res);
             });
+
+            Groups = new ObservableCollection<Group>(Database.Groups.Include(d => d.Pupils));
 
             CreateTask = ReactiveCommand.Create(
                 async (TaskInsertionIncrement inc) =>
@@ -68,6 +71,23 @@ namespace ExamCalculator.UI
                     // Mark exam as changed
                     ExamId.OnNext(ExamId.Value);
                 });
+
+            CreateExamination = ReactiveCommand.Create(
+                async () =>
+                {
+                    if (NewExaminationGroup == null)
+                    {
+                        return;
+                    }
+
+                    var exam = await Exam.FirstAsync();
+                    var examination = exam.CreateExamination(DateTime.Today, NewExaminationGroup);
+
+                    Database.Examinations.Add(examination);
+                    await Database.SaveChangesAsync();
+
+                    router.Navigate.Execute(new ExaminationDetailViewModel(screen, examination.ExaminationId));
+                });
         }
 
         public BehaviorSubject<Guid> ExamId { get; }
@@ -77,14 +97,20 @@ namespace ExamCalculator.UI
         public ObservableCollection<ExamTask> ExamTasks { get; }
 
         public IObservable<string> Caption { get; }
+        
+        public ObservableCollection<Group> Groups { get; }
 
         public ReactiveCommand<TaskInsertionIncrement, Task> CreateTask { get; }
 
         public ReactiveCommand<ExamTask, Task> RemoveTask { get; }
 
+        public ReactiveCommand<Unit, Task> CreateExamination { get; }
+
         public int NewTaskSelectedIndex { get; set; }
 
         public int NewTaskCurrentPoints { get; set; }
+        
+        public Group NewExaminationGroup { get; set; }
 
         private ApplicationDataContext Database { get; } = new();
 

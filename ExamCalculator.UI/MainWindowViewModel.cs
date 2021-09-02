@@ -18,6 +18,10 @@ namespace ExamCalculator.UI
             GoExamOverview = ReactiveCommand.CreateFromObservable(
                 () => Router.Navigate.Execute(new ExamOverviewViewModel(this, Router))
             );
+            
+            GoExaminationOverview = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(new ExaminationOverviewViewModel(this, Router))
+            );
 
             GoGroupOverview.Execute();
         }
@@ -27,6 +31,8 @@ namespace ExamCalculator.UI
         public ReactiveCommand<Unit, IRoutableViewModel> GoGroupOverview { get; }
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoExamOverview { get; }
+        
+        public ReactiveCommand<Unit, IRoutableViewModel> GoExaminationOverview { get; }
 
         // The command that navigates a user back.
         public ReactiveCommand<Unit, Unit> GoBack => Router.NavigateBack;

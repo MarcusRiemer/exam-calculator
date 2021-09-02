@@ -61,6 +61,9 @@ namespace ExamCalculator.Data.Migrations
                     b.Property<Guid>("ExamId")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("TakenOn")
                         .HasColumnType("TEXT");
 
@@ -68,7 +71,9 @@ namespace ExamCalculator.Data.Migrations
 
                     b.HasIndex("ExamId");
 
-                    b.ToTable("Examination");
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("Examinations");
                 });
 
             modelBuilder.Entity("ExamCalculator.Data.ExaminationTaskResult", b =>
@@ -97,7 +102,7 @@ namespace ExamCalculator.Data.Migrations
 
                     b.HasIndex("PupilId");
 
-                    b.ToTable("ExaminationTaskResult");
+                    b.ToTable("ExaminationTaskResults");
                 });
 
             modelBuilder.Entity("ExamCalculator.Data.Group", b =>
@@ -165,7 +170,15 @@ namespace ExamCalculator.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ExamCalculator.Data.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Exam");
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("ExamCalculator.Data.ExaminationTaskResult", b =>

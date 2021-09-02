@@ -20,9 +20,13 @@ namespace ExamCalculator.Data
         public DbSet<Group> Groups { get; set; }
 
         public DbSet<Exam> Exams { get; set; }
-
+        
         public DbSet<ExamTask> ExamTasks { get; set; }
-
+        
+        public DbSet<Examination> Examinations { get; set; }
+        
+        public DbSet<ExaminationTaskResult> ExaminationTaskResults { get; set; }
+        
         //public DbSet<PupilGroup> PupilGroups { get; set; }
 
         public string DbPath { get; }

@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ExamCalculator.UI.ExaminationDetail"
+             Name="examinationDetail">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Classes="Toolbar">
+            <TextBlock Text="{Binding Caption^}" Classes="PageTitle" />
+        </StackPanel>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Punkte Eintragen">
+                <DataGrid  Items="{Binding ExaminationTaskResult}" RowEditEnded="OnRowEditEnded">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Schüler:in" Width="*" Binding="{Binding Pupil.DisplayName}"
+                                            IsReadOnly="True" />
+                        <DataGridTextColumn Header="Aufgabe" Binding="{Binding ExamTask.Number}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Max Punkte" Binding="{Binding ExamTask.MaximumPoints}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Punkte" Binding="{Binding Score}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Ergebnisse"><TextBlock>Kommen noch</TextBlock></TabItem>
+        </TabControl>
+        
+    </Grid>
+</UserControl>

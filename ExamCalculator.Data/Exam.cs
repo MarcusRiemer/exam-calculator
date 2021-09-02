@@ -33,11 +33,20 @@ namespace ExamCalculator.Data
         /// </summary>
         public ICollection<Examination> Examinations { get; set; } = new List<Examination>();
 
-        public Examination CreateExamination(DateTime takenOn, IEnumerable<Pupil> pupils)
+        public Examination CreateExamination(DateTime takenOn, Group group)
         {
-            var examination = new Examination {Exam = this, TakenOn = takenOn, ExaminationId = Guid.NewGuid()};
+            if (group.Pupils == null)
+            {
+                throw new ArgumentException($"{nameof(group.Pupils)} must be loaded");
+            }
 
-            foreach (var pupil in pupils) examination.AddPupil(pupil);
+            var examination = new Examination
+                {ExaminationId = Guid.NewGuid(), Exam = this, TakenOn = takenOn, Group = group};
+
+            foreach (var pupil in group.Pupils)
+            {
+                examination.AddPupil(pupil);
+            }
 
             return examination;
         }

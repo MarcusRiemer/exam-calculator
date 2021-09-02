@@ -4,48 +4,38 @@ using System.Linq;
 using System.Reactive;
 using Avalonia.Controls;
 using ExamCalculator.Data;
+using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 
 namespace ExamCalculator.UI
 {
-    public class ExamOverviewViewModel : ReactiveObject, IRoutableViewModel
+    public class ExaminationOverviewViewModel : ReactiveObject, IRoutableViewModel
     {
-        public ExamOverviewViewModel(IScreen screen, RoutingState router)
+        public ExaminationOverviewViewModel(IScreen screen, RoutingState router)
         {
             HostScreen = screen;
-            Exams = new ObservableCollection<Exam>(Database.Exams);
-
-            Create = ReactiveCommand.Create(
-                () =>
-                {
-                    var exam = Database.Exams.Add(
-                        new Exam {ExamId = Guid.NewGuid()}
-                    );
-                    Database.SaveChanges();
-
-                    Exams.Add(exam.Entity);
-                });
+            Examinations =
+                new ObservableCollection<Examination>(Database.Examinations.Include(d => d.Exam).Include(d => d.Group));
 
             Delete = ReactiveCommand.Create(
-                (Exam exam) =>
+                (Examination examination) =>
                 {
-                    Database.Exams.Remove(exam);
+                    Database.Examinations.Remove(examination);
                     Database.SaveChanges();
 
-                    Exams.Remove(exam);
+                    Examinations.Remove(examination);
                 }
             );
 
             GoDetails = ReactiveCommand.CreateFromObservable(
-                (Guid examId) => router.Navigate.Execute(new ExamDetailViewModel(screen, router, examId))
+                (Guid examinationId) => router.Navigate.Execute(new ExaminationDetailViewModel(screen, examinationId))
             );
         }
 
-        public ObservableCollection<Exam> Exams { get; }
+        public ObservableCollection<Examination> Examinations { get; }
 
-        public ReactiveCommand<Unit, Unit> Create { get; }
 
-        public ReactiveCommand<Exam, Unit> Delete { get; }
+        public ReactiveCommand<Examination, Unit> Delete { get; }
 
         public ReactiveCommand<Guid, IRoutableViewModel> GoDetails { get; }
 
@@ -61,7 +51,7 @@ namespace ExamCalculator.UI
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
-                var avaloniaInstance = Exams.ElementAt(e.Row.GetIndex());
+                var avaloniaInstance = Examinations.ElementAt(e.Row.GetIndex());
                 var dbInstance = Database.Entry(avaloniaInstance);
                 dbInstance.CurrentValues.SetValues(avaloniaInstance);
                 Database.SaveChanges();

@@ -8,26 +8,33 @@ namespace ExamCalculator.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Examination",
+                name: "Examinations",
                 columns: table => new
                 {
                     ExaminationId = table.Column<Guid>(type: "TEXT", nullable: false),
                     ExamId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    GroupId = table.Column<Guid>(type: "TEXT", nullable: false),
                     TakenOn = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Examination", x => x.ExaminationId);
+                    table.PrimaryKey("PK_Examinations", x => x.ExaminationId);
                     table.ForeignKey(
-                        name: "FK_Examination_Exams_ExamId",
+                        name: "FK_Examinations_Exams_ExamId",
                         column: x => x.ExamId,
                         principalTable: "Exams",
                         principalColumn: "ExamId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Examinations_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "GroupId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExaminationTaskResult",
+                name: "ExaminationTaskResults",
                 columns: table => new
                 {
                     ExaminationTaskResultId = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -38,21 +45,21 @@ namespace ExamCalculator.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExaminationTaskResult", x => x.ExaminationTaskResultId);
+                    table.PrimaryKey("PK_ExaminationTaskResults", x => x.ExaminationTaskResultId);
                     table.ForeignKey(
-                        name: "FK_ExaminationTaskResult_Examination_ExaminationId",
+                        name: "FK_ExaminationTaskResults_Examinations_ExaminationId",
                         column: x => x.ExaminationId,
-                        principalTable: "Examination",
+                        principalTable: "Examinations",
                         principalColumn: "ExaminationId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ExaminationTaskResult_ExamTasks_ExamTaskId",
+                        name: "FK_ExaminationTaskResults_ExamTasks_ExamTaskId",
                         column: x => x.ExamTaskId,
                         principalTable: "ExamTasks",
                         principalColumn: "ExamTaskId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ExaminationTaskResult_Pupils_PupilId",
+                        name: "FK_ExaminationTaskResults_Pupils_PupilId",
                         column: x => x.PupilId,
                         principalTable: "Pupils",
                         principalColumn: "PupilId",
@@ -60,33 +67,38 @@ namespace ExamCalculator.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Examination_ExamId",
-                table: "Examination",
+                name: "IX_Examinations_ExamId",
+                table: "Examinations",
                 column: "ExamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExaminationTaskResult_ExaminationId",
-                table: "ExaminationTaskResult",
+                name: "IX_Examinations_GroupId",
+                table: "Examinations",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExaminationTaskResults_ExaminationId",
+                table: "ExaminationTaskResults",
                 column: "ExaminationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExaminationTaskResult_ExamTaskId",
-                table: "ExaminationTaskResult",
+                name: "IX_ExaminationTaskResults_ExamTaskId",
+                table: "ExaminationTaskResults",
                 column: "ExamTaskId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExaminationTaskResult_PupilId",
-                table: "ExaminationTaskResult",
+                name: "IX_ExaminationTaskResults_PupilId",
+                table: "ExaminationTaskResults",
                 column: "PupilId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ExaminationTaskResult");
+                name: "ExaminationTaskResults");
 
             migrationBuilder.DropTable(
-                name: "Examination");
+                name: "Examinations");
         }
     }
 }

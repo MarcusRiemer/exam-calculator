@@ -33,5 +33,10 @@ namespace ExamCalculator.UI
         {
             ViewModel.GoGroupOverview.Execute();
         }
+
+        private void OnNavigateExaminations(object? sender, RoutedEventArgs e)
+        {
+            ViewModel.GoExaminationOverview.Execute();
+        }
     }
 }

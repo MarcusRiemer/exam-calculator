@@ -16,6 +16,10 @@ namespace ExamCalculator.Data
 
         public Guid ExamId { get; set; }
         public Exam Exam { get; set; }
+        
+        public Guid GroupId { get; set; }
+        
+        public Group Group { get; set; }
 
         public ICollection<ExaminationTaskResult> Results { get; set; } = new List<ExaminationTaskResult>();
 
