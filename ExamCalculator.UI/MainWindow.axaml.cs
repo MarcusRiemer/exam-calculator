@@ -13,7 +13,9 @@ namespace ExamCalculator.UI
     {
         public MainWindow()
         {
-            this.WhenActivated(disposables => { ApplicationDataContext.EnsureDatabase(); });
+            ApplicationDataContext.EnsureDatabase();
+            
+            this.WhenActivated(disposables => {  });
             AvaloniaXamlLoader.Load(this);
 
 #if DEBUG

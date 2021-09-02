@@ -60,16 +60,23 @@ namespace ExamCalculator.Data
         {
             using var db = new ApplicationDataContext();
             Console.WriteLine($"Using DB at {db.DbPath}");
-            db.Database.EnsureCreated();
-            var pendingMigrations = db.Database.GetPendingMigrations();
-            Console.WriteLine($"There are {pendingMigrations.Count()} pending migrations");
+            if (db.Database.EnsureCreated())
+            {
+                var pendingMigrations = db.Database.GetPendingMigrations();
+                Console.WriteLine($"There are {pendingMigrations.Count()} pending migrations");
 
-            db.Database.Migrate();
+                if (pendingMigrations.Any())
+                {
+                    db.Database.Migrate();
+                }   
+            }
+            
         }
 
         // I sometimes need to test EF Core behaviour and use this method to do so
         public void Startup()
         {
+            
             /*
             var p = Pupils.Add(new Pupil { PupilId = Guid.NewGuid(), FirstName = "A", LastName = "Z"});
             var g =Groups.Add(new Group { GroupId = Guid.NewGuid(), Name = "K"});
