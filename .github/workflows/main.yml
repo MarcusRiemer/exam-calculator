@@ -44,4 +44,9 @@ jobs:
     
     - name: Build
       working-directory: 'ExamCalculator.UI'
-      run:  dotnet publish -p:PublishSingleFile=true -c  ${{ matrix.configuration }} -r ${{ matrix.runtime }}  
+      run:  dotnet publish -p:PublishSingleFile=true -c  ${{ matrix.configuration }} -r ${{ matrix.runtime }}
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: "Klausurverwaltung-${{ matrix.runtime }}-${{ matrix.configuration }}.zip"
+        path: ExamCalculator.UI/bin/Release/net5.0/win7-x64/publish/
