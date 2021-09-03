@@ -19,7 +19,9 @@ jobs:
 
     strategy:
       matrix:
-        configuration: [Debug, Release]
+        configuration: 
+          # - Debug
+          - Release
         runtime: [win7-x64]
 
     runs-on: windows-latest  # For a list of available runner types, refer to 
@@ -41,4 +43,5 @@ jobs:
         dotnet-version: '5.0.x'
     
     - name: Build
+      working-directory: 'ExamCalculator.UI'
       run:  dotnet publish -p:PublishSingleFile=true -c  ${{ matrix.configuration }} -r ${{ matrix.runtime }}  
