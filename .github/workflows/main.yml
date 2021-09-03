@@ -47,9 +47,9 @@ jobs:
     
     - name: Build
       working-directory: 'ExamCalculator.UI'
-      run:  dotnet publish -p:PublishSingleFile=true --output publish -c  ${{ matrix.configuration }} -r ${{ matrix.runtime }}
+      run:  dotnet publish -p:PublishSingleFile=true --output "${{GITHUB_WORKSPACE}}/publish" -c  ${{ matrix.configuration }} -r ${{ matrix.runtime }}
     
     - uses: actions/upload-artifact@v2
       with:
         name: "Klausurverwaltung-${{ matrix.runtime }}-${{ matrix.configuration }}.zip"
-        path: publish/
+        path: "${{GITHUB_WORKSPACE}}/publish"
