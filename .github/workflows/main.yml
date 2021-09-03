@@ -51,5 +51,5 @@ jobs:
     
     - uses: actions/upload-artifact@v2
       with:
-        name: "Klausurverwaltung-${{ matrix.runtime }}-${{ matrix.configuration }}.zip"
+        name: "Klausurverwaltung-${{ matrix.runtime }}-${{ matrix.configuration }}"
         path: "${{ env.GITHUB_WORKSPACE }}/publish"
