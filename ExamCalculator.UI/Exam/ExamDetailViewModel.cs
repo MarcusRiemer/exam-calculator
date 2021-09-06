@@ -37,7 +37,7 @@ namespace ExamCalculator.UI
                 ExamTasks.AddRange(res);
             });
 
-            Groups = new ObservableCollection<Group>(Database.Groups.Include(d => d.Pupils));
+            Groups = new ObservableCollection<Group>(Database.Groups.OrderBy(g => g.Name).Include(d => d.Pupils));
 
             CreateTask = ReactiveCommand.Create(
                 async (TaskInsertionIncrement inc) =>
