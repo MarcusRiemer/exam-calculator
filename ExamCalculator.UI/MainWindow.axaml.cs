@@ -5,7 +5,9 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ExamCalculator.Data;
+using ExamCalculator.Service.UI;
 using ReactiveUI;
+using Splat;
 
 namespace ExamCalculator.UI
 {
@@ -14,6 +16,8 @@ namespace ExamCalculator.UI
         public MainWindow()
         {
             ApplicationDataContext.EnsureDatabase();
+            
+            Locator.CurrentMutable.RegisterConstant(new DialogService(this), typeof(IDialogService));
             
             this.WhenActivated(disposables => {  });
             AvaloniaXamlLoader.Load(this);

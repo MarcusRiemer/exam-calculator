@@ -5,9 +5,11 @@ using System.Reactive;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using ExamCalculator.Data;
+using ExamCalculator.Service.UI;
 using MessageBox.Avalonia;
 using MessageBox.Avalonia.Enums;
 using ReactiveUI;
+using Splat;
 
 namespace ExamCalculator.UI
 {
@@ -38,7 +40,7 @@ namespace ExamCalculator.UI
                         $"Wenn diese Klausur gelöscht wird, werden auch {count} Prüfungen gelöscht! Wirklich löschen?",
                         ButtonEnum.YesNo
                     );
-                    var result = await box.Show();
+                    var result = await DialogService.ShowDialog(box);
                     var doDelete = result == ButtonResult.Yes;
                     if (doDelete)
                     {
@@ -81,5 +83,7 @@ namespace ExamCalculator.UI
                 Database.SaveChanges();
             }
         }
+        
+        public IDialogService DialogService => (IDialogService) Locator.Current.GetService(typeof(IDialogService));
     }
 }

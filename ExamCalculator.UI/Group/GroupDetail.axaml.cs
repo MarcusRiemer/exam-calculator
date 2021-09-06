@@ -4,6 +4,8 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using Avalonia.VisualTree;
+using DynamicData;
+using ExamCalculator.Data;
 
 namespace ExamCalculator.UI
 {
@@ -20,14 +22,24 @@ namespace ExamCalculator.UI
             var t = sender as TextBox;
             if (e.Key == Key.Enter)
             {
-                ViewModel.OnSeachAccept((Window) this.GetVisualRoot());
+                ViewModel.OnSeachAccept();
                 e.Handled = true;
             }
         }
 
         private void OnClickAddPupil(object? sender, RoutedEventArgs e)
         {
-            ViewModel.OnSeachAccept((Window) this.GetVisualRoot());
+            ViewModel.OnSeachAccept();
+        }
+
+        private void OnDataGridSelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            DataGrid dg = (DataGrid) sender;
+            ViewModel.SelectedPupils.Clear();
+            foreach (var selectedItem in dg.SelectedItems)
+            {
+                ViewModel.SelectedPupils.Add((Pupil)selectedItem);
+            }
         }
     }
 }

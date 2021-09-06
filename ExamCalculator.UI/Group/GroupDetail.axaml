@@ -17,7 +17,8 @@
         <TextBlock Text="{Binding Caption^}" Classes="PageTitle" />
 
         <DataGrid Grid.Row="1"
-                  Items="{Binding GroupPupils}">
+                  Items="{Binding GroupPupils}"
+                  IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Vorname" Width="*" Binding="{Binding FirstName}" />
                 <DataGridTextColumn Header="Nachname" Width="*" Binding="{Binding LastName}" />
@@ -38,8 +39,11 @@
             <TextBox Text="{Binding PupilNameQuery}" KeyUp="OnSearchKey" Watermark="Name filtern" Width="256" />
             <Button Content="Angezeigte Schüler:in hinzufügen" Click="OnClickAddPupil" />
         </StackPanel>
+        <!-- SelectedItems="{Binding SelectedPupils, Mode=OneWay}" -->
         <DataGrid Grid.Row="3"
-                  Items="{Binding AvailablePupils}">
+                  Items="{Binding AvailablePupils}"
+                  IsReadOnly="True"
+                  SelectionChanged="OnDataGridSelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Vorname" Width="*" Binding="{Binding FirstName}" />
                 <DataGridTextColumn Header="Nachname" Width="*" Binding="{Binding LastName}" />

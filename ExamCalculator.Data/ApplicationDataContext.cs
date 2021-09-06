@@ -54,12 +54,18 @@ namespace ExamCalculator.Data
                 .HasForeignKey(gp => gp.GroupId);*/
         }
 
+        /// <summary>
+        /// Ensures that the database is in a usable state
+        /// </summary>
         public static void EnsureDatabase()
         {
             using var db = new ApplicationDataContext();
             Console.WriteLine($"Using DB at {db.DbPath}");
-            if (db.Database.EnsureCreated())
+            
+            // Returns true if database was created at this call
+            if (!db.Database.EnsureCreated())
             {
+                // Database already exists, do migrations
                 var pendingMigrations = db.Database.GetPendingMigrations();
                 Console.WriteLine($"There are {pendingMigrations.Count()} pending migrations");
 
@@ -68,7 +74,6 @@ namespace ExamCalculator.Data
                     db.Database.Migrate();
                 }   
             }
-            
         }
 
         // I sometimes need to test EF Core behaviour and use this method to do so

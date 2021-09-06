@@ -50,6 +50,8 @@ namespace ExamCalculator.UI
 
         public ReactiveCommand<Guid, IRoutableViewModel> GoDetails { get; }
 
+ 
+
         private ApplicationDataContext Database { get; } = new();
 
         // Reference to IScreen that owns the routable view model.

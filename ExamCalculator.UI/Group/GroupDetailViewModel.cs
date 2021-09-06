@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
@@ -7,10 +9,12 @@ using System.Reactive.Subjects;
 using Avalonia.Controls;
 using DynamicData;
 using ExamCalculator.Data;
+using ExamCalculator.Service.UI;
 using MessageBox.Avalonia;
 using MessageBox.Avalonia.Enums;
 using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
+using Splat;
 
 namespace ExamCalculator.UI
 {
@@ -92,9 +96,13 @@ namespace ExamCalculator.UI
         // Unique identifier for the routable view model.
         public string UrlPathSegment { get; } = "/group";
 
-        public async void OnSeachAccept(Window window)
+        public async void OnSeachAccept()
         {
-            var count = AvailablePupils.Count;
+            var selectedPupils = SelectedPupils.Any()
+                ? AvailablePupils.Where(p => SelectedPupils.Contains(p))
+                : AvailablePupils;
+            
+            var count = selectedPupils.Count();
             var doAdd = count == 1;
             if (count > 1)
             {
@@ -103,7 +111,7 @@ namespace ExamCalculator.UI
                     $"Wirklich {count} Schüler:innen zu dieser Klasse hinzufügen?",
                     ButtonEnum.YesNo
                 );
-                var result = await box.ShowDialog(window);
+                var result = await DialogService.ShowDialog(box);
                 doAdd = result == ButtonResult.Yes;
             }
             else if (count == 0)
@@ -112,17 +120,23 @@ namespace ExamCalculator.UI
                     "Keine Schüler:innen ausgewählt",
                     "Sofern die Namen von Schüler:innen in der aktuellen Liste auftauchen, könnten diese der Klasse hinzugefügt werden"
                 );
-                await box.ShowDialog(window);
+                await DialogService.ShowDialog(box);
             }
 
             if (doAdd)
             {
-                foreach (var p in AvailablePupils) Group.Value.Pupils.Add(p);
+                foreach (var p in selectedPupils) Group.Value.Pupils.Add(p);
 
                 Database.SaveChanges();
                 Group.OnNext(Group.Value);
                 PupilNameQuery = "";
             }
         }
+        
+        public IList<Pupil> SelectedPupils { get; } = new List<Pupil>();
+
+        public IDialogService DialogService => (IDialogService) Locator.Current.GetService(typeof(IDialogService));
     }
+    
+ 
 }
