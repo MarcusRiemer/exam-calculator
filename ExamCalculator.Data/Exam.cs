@@ -40,7 +40,7 @@ namespace ExamCalculator.Data
             var examination = new Examination
                 {ExaminationId = Guid.NewGuid(), Exam = this, TakenOn = takenOn, Group = group};
 
-            foreach (var pupil in group.Pupils) examination.AddPupil(pupil);
+            foreach (var pupil in group.Pupils) examination.PupilTakesExam(pupil);
 
             return examination;
         }

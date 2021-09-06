@@ -38,7 +38,7 @@ namespace ExamCalculator.Data.Test
 
             var examination = exam.CreateExamination(DateTime.Now, group);
 
-            Assert.AreEqual(4, examination.Results.Count);
+            Assert.AreEqual(4, examination.TaskResults.Count);
         }
     }
 }

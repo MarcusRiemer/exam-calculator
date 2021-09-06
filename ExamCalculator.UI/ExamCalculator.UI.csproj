@@ -44,5 +44,13 @@
             <DependentUpon>ExamOverview.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Compile Update="Examination\ExaminationResult.axaml.cs">
+          <DependentUpon>ExaminationResult.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Examination\ExaminationScore.axaml.cs">
+          <DependentUpon>ExaminationScore.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 </Project>

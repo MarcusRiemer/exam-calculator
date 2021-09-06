@@ -20,5 +20,10 @@ namespace ExamCalculator.Data
         public ExamTask ExamTask { get; set; }
 
         public int? Score { get; set; }
+
+        /// <summary>
+        /// Percentage of points for this specific task. 0% if there is no score.
+        /// </summary>
+        public float Percent => (this.Score ?? 0) / ExamTask.MaximumPoints;
     }
 }

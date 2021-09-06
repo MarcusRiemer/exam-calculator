@@ -14,7 +14,7 @@ namespace ExamCalculator.Data
             var path = Environment.GetFolderPath(folder);
             DbPath = $"{path}{Path.DirectorySeparatorChar}exams.sqlite";
         }
-
+        
         public DbSet<Pupil> Pupils { get; set; }
 
         public DbSet<Group> Groups { get; set; }
@@ -26,8 +26,6 @@ namespace ExamCalculator.Data
         public DbSet<Examination> Examinations { get; set; }
 
         public DbSet<ExaminationTaskResult> ExaminationTaskResults { get; set; }
-
-        //public DbSet<PupilGroup> PupilGroups { get; set; }
 
         public string DbPath { get; }
 
