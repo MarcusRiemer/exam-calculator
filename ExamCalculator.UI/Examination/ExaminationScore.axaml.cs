@@ -13,7 +13,7 @@ namespace ExamCalculator.UI
 
         private void OnRowEditEnded(object? sender, DataGridRowEditEndedEventArgs e)
         {
-            ViewModel.OnRowEditEnded(e);
+            ViewModel!.OnRowEditEnded(e);
         }
     }
 }

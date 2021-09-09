@@ -14,12 +14,12 @@ namespace ExamCalculator.UI
 
         private void OnNavigatePoints(object? sender, RoutedEventArgs e)
         {
-            ViewModel.GoPoints.Execute();
+            ViewModel!.GoPoints.Execute();
         }
 
         private void OnNavigateResult(object? sender, RoutedEventArgs e)
         {
-            ViewModel.GoResult.Execute();
+            ViewModel!.GoResult.Execute();
         }
     }
 }

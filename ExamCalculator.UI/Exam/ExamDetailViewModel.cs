@@ -83,7 +83,7 @@ namespace ExamCalculator.UI
                     Database.Examinations.Add(examination);
                     await Database.SaveChangesAsync();
 
-                    router.Navigate.Execute(new ExaminationDetailViewModel(screen, examination.ExaminationId));
+                    await router.Navigate.Execute(new ExaminationDetailViewModel(screen, examination.ExaminationId));
                 });
         }
 
@@ -107,7 +107,7 @@ namespace ExamCalculator.UI
 
         public int NewTaskCurrentPoints { get; set; }
 
-        public Group NewExaminationGroup { get; set; }
+        public Group? NewExaminationGroup { get; set; } = null;
 
         private ApplicationDataContext Database { get; } = new();
 

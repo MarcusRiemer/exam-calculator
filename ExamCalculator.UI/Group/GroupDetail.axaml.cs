@@ -22,20 +22,20 @@ namespace ExamCalculator.UI
             var t = sender as TextBox;
             if (e.Key == Key.Enter)
             {
-                ViewModel.OnSeachAccept();
+                ViewModel!.OnSeachAccept();
                 e.Handled = true;
             }
         }
 
         private void OnClickAddPupil(object? sender, RoutedEventArgs e)
         {
-            ViewModel.OnSeachAccept();
+            ViewModel!.OnSeachAccept();
         }
 
         private void OnDataGridSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
-            DataGrid dg = (DataGrid) sender;
-            ViewModel.SelectedPupils.Clear();
+            DataGrid dg = (DataGrid) sender!;
+            ViewModel!.SelectedPupils.Clear();
             foreach (var selectedItem in dg.SelectedItems)
             {
                 ViewModel.SelectedPupils.Add((Pupil)selectedItem);

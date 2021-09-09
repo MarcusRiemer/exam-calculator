@@ -29,41 +29,41 @@ namespace ExamCalculator.UI
 
         private void OnNavigatePupils(object? sender, RoutedEventArgs e)
         {
-            ViewModel.GoPupilOverview.Execute();
+            ViewModel!.GoPupilOverview.Execute();
         }
 
         private void OnNavigateExams(object? sender, RoutedEventArgs e)
         {
-            ViewModel.GoExamOverview.Execute();
+            ViewModel!.GoExamOverview.Execute();
         }
 
         private void OnNavigateGroups(object? sender, RoutedEventArgs e)
         {
-            ViewModel.GoGroupOverview.Execute();
+            ViewModel!.GoGroupOverview.Execute();
         }
 
         private void OnNavigateExaminations(object? sender, RoutedEventArgs e)
         {
-            ViewModel.GoExaminationOverview.Execute();
+            ViewModel!.GoExaminationOverview.Execute();
         }
 
 
         private void OnNavigateGroupDetail(object? sender, RoutedEventArgs e)
         {
-            var group = (sender as TextBlock).DataContext as Group;
-            ViewModel.GoGroupDetail.Execute(group.GroupId);
+            var group = (sender as TextBlock)!.DataContext as Group;
+            ViewModel!.GoGroupDetail.Execute(group!.GroupId);
             e.Handled = true;
         }
 
         private void OnTreeItemSelected(object? sender, SelectionChangedEventArgs e)
         {
-            object senderData = null;
+            object? senderData = null;
             if (e.AddedItems.Count == 1) senderData = e.AddedItems[0];
 
             switch (senderData)
             {
                 case Group g:
-                    ViewModel.GoGroupDetail.Execute(g.GroupId);
+                    ViewModel!.GoGroupDetail.Execute(g.GroupId);
                     break;
                 case TreeViewItem t:
                     if (t.DataContext is ReactiveCommand<Unit, IRoutableViewModel> c)
