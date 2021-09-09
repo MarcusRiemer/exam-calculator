@@ -33,7 +33,7 @@ namespace ExamCalculator.Data
         /// <summary>
         ///     How many points a pupil would retrieve if the question is answerred 100% correct.
         /// </summary>
-        public float MaximumPoints { get; set; }
+        public int? MaximumPoints { get; set; }
 
         /// <summary>
         ///     The exam this task is part of.

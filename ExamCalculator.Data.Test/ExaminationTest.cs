@@ -10,8 +10,7 @@ namespace ExamCalculator.Data.Test
         [Test]
         public void Exam1a2a_PupilX1Y2()
         {
-            var db = new TestDatabase();
-            if (!db.Database.EnsureCreated()) Assert.Fail("Database not created");
+            using var db = new TestDatabase();
 
             var exam = new Exam
             {

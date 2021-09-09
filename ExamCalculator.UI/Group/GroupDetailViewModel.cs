@@ -125,8 +125,10 @@ namespace ExamCalculator.UI
 
             if (doAdd)
             {
-                foreach (var p in selectedPupils) Group.Value.Pupils.Add(p);
-
+                foreach (var p in selectedPupils)
+                {
+                    Group.Value.Pupils.Add(p);
+                }
                 Database.SaveChanges();
                 Group.OnNext(Group.Value);
                 PupilNameQuery = "";
