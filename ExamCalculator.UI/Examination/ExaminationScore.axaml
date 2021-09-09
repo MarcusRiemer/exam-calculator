@@ -5,7 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ExamCalculator.UI.ExaminationScore"
              Name="examinationDetail">
-    <DataGrid Items="{Binding ExaminationTaskResult}" RowEditEnded="OnRowEditEnded">
+    <DataGrid Items="{Binding ExaminationTaskResult}" RowEditEnded="OnRowEditEnded" x:Name="ScoreGrid">
         <DataGrid.Columns>
             <DataGridTextColumn Header="Schüler:in" Width="*" Binding="{Binding Pupil.DisplayName}"
                                 IsReadOnly="True" />
@@ -13,6 +13,7 @@
             <DataGridTextColumn Header="Max Punkte" Binding="{Binding ExamTask.MaximumPoints}"
                                 IsReadOnly="True" />
             <DataGridTextColumn Header="Punkte" Binding="{Binding Score}" />
+            <DataGridTextColumn Header="Test XAML" Binding="{Binding Test[1]}" />
         </DataGrid.Columns>
     </DataGrid>
 </UserControl>
