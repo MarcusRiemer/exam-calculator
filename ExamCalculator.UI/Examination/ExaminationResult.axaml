@@ -2,8 +2,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:conv="using:ExamCalculator.UI.Converters" 
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ExamCalculator.UI.ExaminationResult"
              Name="examinationDetail">
-    <TextBlock>Hier kommen Ergebnisse in %</TextBlock>
+    <DataGrid Items="{Binding ExaminationPupilResult}">
+        <DataGrid.Resources>
+            <conv:Percent x:Key="Percent"/>
+        </DataGrid.Resources>
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Vorname" Width="*" Binding="{Binding Pupil.FirstName}"
+                                IsReadOnly="True" />
+            <DataGridTextColumn Header="Nachname" Width="*" Binding="{Binding Pupil.LastName}"
+                                IsReadOnly="True" />
+            <DataGridTextColumn Header="Punkte" Binding="{Binding OverallPoints}" IsReadOnly="True" />
+            <DataGridTextColumn Header="Prozent" Binding="{Binding OverallPercentage, Converter={StaticResource Percent}}" IsReadOnly="True" />
+        </DataGrid.Columns>
+    </DataGrid>
 </UserControl>

@@ -14,7 +14,6 @@ namespace ExamCalculator.UI
     {
         public ExaminationScoreViewModel(IScreen parentScreen, Guid examinationId) : base(parentScreen, examinationId)
         {
-            ExaminationTaskResult = new ObservableCollection<ExaminationTaskResult>();
             ExaminationId.Select(
                     examinationId => Database.ExaminationTaskResults
                         .Where(res => res.ExaminationId == examinationId)
@@ -30,21 +29,21 @@ namespace ExamCalculator.UI
                         ExaminationTaskResult.AddRange(results);
                     });
         }
-        
-        public ObservableCollection<ExaminationTaskResult> ExaminationTaskResult { get; }
+
+        public ObservableCollection<ExaminationTaskResult> ExaminationTaskResult { get; } = new();
         
         // Unique identifier for the routable view model.
         public override string UrlPathSegment { get; } = "/examination/score/:id";
 
         public void OnRowEditEnded(DataGridRowEditEndedEventArgs e)
         {
-            /*if (e.EditAction == DataGridEditAction.Commit)
+            if (e.EditAction == DataGridEditAction.Commit)
             {
                 var avaloniaInstance = ExaminationTaskResult.ElementAt(e.Row.GetIndex());
                 var dbInstance = Database.Entry(avaloniaInstance);
                 dbInstance.CurrentValues.SetValues(avaloniaInstance);
                 Database.SaveChanges();
-            }*/
+            }
         }
     }
 }

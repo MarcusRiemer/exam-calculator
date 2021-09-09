@@ -9,19 +9,26 @@ namespace ExamCalculator.Service.UI
         public Task<T> ShowDialog<T>(IMsBoxWindow<T> dlg);
     }
     
+    /// <summary>
+    /// Dialogs require a top level window that they need to block. This service
+    /// holds on to such a window and makes it implicitly available.
+    /// </summary>
     public class DialogService : IDialogService
     {
         public DialogService(Window window)
         {
-            this.window = window;
+            _window = window;
         }
 
 
+        /// <summary>
+        /// Shows a dialog that blocks the main window
+        /// </summary>
         public Task<T> ShowDialog<T>(IMsBoxWindow<T> dlg)
         {
-            return dlg.ShowDialog(window);
+            return dlg.ShowDialog(_window);
         }
 
-        private Window window;
+        private readonly Window _window;
     }
 }

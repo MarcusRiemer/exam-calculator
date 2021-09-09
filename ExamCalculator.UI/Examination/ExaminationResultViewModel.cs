@@ -15,8 +15,23 @@ namespace ExamCalculator.UI
     {
         public ExaminationResultViewModel(IScreen parentScreen, Guid examinationId) : base(parentScreen, examinationId)
         {
-            
+            ExaminationId.Select(
+                    examinationId => Database.Examinations
+                        .Include(ex => ex.Group).ThenInclude(g => g.Pupils)
+                        .Include(ex => ex.TaskResults).ThenInclude(ex => ex.ExamTask)
+                        .First(ex => ex.ExaminationId == examinationId)
+                )
+                .Subscribe(
+                    results =>
+                    {
+                        ExaminationPupilResult.Clear();
+                        ExaminationPupilResult.AddRange(results.Group.Pupils
+                            .OrderBy(p => p.FirstName)
+                            .Select(p => new ExaminationPupilResult(p, results)));
+                    });
         }
+
+        public ObservableCollection<ExaminationPupilResult> ExaminationPupilResult { get; } = new();
         
         // Unique identifier for the routable view model.
         public override string UrlPathSegment { get; } = "/examination/result/:id";

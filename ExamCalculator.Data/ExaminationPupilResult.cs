@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,12 +10,14 @@ namespace ExamCalculator.Data
             Examination.TaskResults.Where(res => res.PupilId == Pupil.PupilId);
 
         public bool IsComplete => TaskResults.All(res => res.Score.HasValue);
+
+        public int OverallPoints => TaskResults.Sum(res => res.Score ?? 0);
         
         public float OverallPercentage
         {
             get
             {
-                var results = TaskResults.Where(res => res.Score.HasValue).ToArray();
+                var results = TaskResults.ToArray();
 
                 if (results.Length > 0)
                 {
@@ -26,5 +29,7 @@ namespace ExamCalculator.Data
                 }
             }
         }
+        
+        
     };
 }

@@ -8,6 +8,8 @@
         <entry key="ExamCalculator.UI/Exam/ExamOverview.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
         <entry key="ExamCalculator.UI/Exam/GroupDetail.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
         <entry key="ExamCalculator.UI/ExamOverview.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
+        <entry key="ExamCalculator.UI/Examination/ExaminationResult.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
+        <entry key="ExamCalculator.UI/Examination/ExaminationScore.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
         <entry key="ExamCalculator.UI/Group/GroupDetail.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
         <entry key="ExamCalculator.UI/Group/GroupOverview.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
         <entry key="ExamCalculator.UI/GroupOverview.axaml" value="ExamCalculator.UI/ExamCalculator.UI.csproj" />
