@@ -10,6 +10,26 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Classes="Toolbar">
+            <TextBlock>Klasse: </TextBlock>
+            <ComboBox Items="{Binding Groups}" SelectionChanged="OnGroupChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock>Klausur: </TextBlock>
+            <ComboBox Items="{Binding Exams}" SelectionChanged="OnExamChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Content="Prüfung Neu" IsEnabled="{Binding CanCreate^}" Command="{Binding Create}" />
+        </StackPanel>
+
         <DataGrid Grid.Row="1"
                   Items="{Binding Examinations}"
                   RowEditEnded="OnRowEditEnded">
