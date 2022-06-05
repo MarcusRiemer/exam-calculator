@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,7 +22,7 @@ namespace ExamCalculator.Data
 
         public int? Score { get; set; }
 
-        public int[] Test { get; } = {1, 2, 3};
+        public String[] Detail { get; } = {"1","2","3"};
 
         /// <summary>
         /// Percentage of points for this specific task. 0% if there is no score.

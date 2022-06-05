@@ -13,7 +13,6 @@
             <DataGridTextColumn Header="Max Punkte" Binding="{Binding ExamTask.MaximumPoints}"
                                 IsReadOnly="True" />
             <DataGridTextColumn Header="Punkte" Binding="{Binding Score}" />
-            <DataGridTextColumn Header="Test XAML" Binding="{Binding Test[1]}" />
         </DataGrid.Columns>
     </DataGrid>
 </UserControl>

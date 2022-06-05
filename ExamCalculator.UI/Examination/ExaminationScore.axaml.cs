@@ -15,7 +15,7 @@ namespace ExamCalculator.UI
             dataGrid.Columns.Add(new DataGridTextColumn()
             {
                 Header = "Test",
-                Binding = new Binding($"Test[0]")
+                Binding = new Binding($"Detail[0]")
             });
         }
 
