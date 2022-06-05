@@ -1,17 +1,12 @@
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reactive;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using Avalonia.Controls;
-using DynamicData;
-using ExamCalculator.Data;
-using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 
 namespace ExamCalculator.UI
 {
+    /// <summary>
+    /// Hosts detail information about an examination.
+    /// </summary>
     public class ExaminationDetailViewModel : ExaminationBaseViewModel, IScreen
     {
         public ExaminationDetailViewModel(IScreen parentScreen, Guid examinationId) : base(parentScreen, examinationId)
